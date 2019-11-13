@@ -1,5 +1,5 @@
 plugins {
-    id 'war'  
+    id 'war'
 }
 
 repositories {
@@ -36,7 +36,7 @@ sourceSets {
     }
 }
 
-ext.setProperty('payaraHome', "/d:/Henri/payara5");
+ext.setProperty('payaraHome', "/home/nico/Documents/payara5");
 ext.setProperty('asadminDir', "${payaraHome}${File.separator}bin");
 ext.setProperty('asadminFile', System.properties['os.name'].toLowerCase().contains('windows')? ['cmd', '/c', 'asadmin.bat']: './asadmin')
 
@@ -50,21 +50,21 @@ task explodedWar(type: Sync) {
 task startServer(type:Exec) {
     workingDir asadminDir;
     commandLine asadminFile;
- 
+
     args "start-domain"
 }
- 
+
 task stopServer(type:Exec) {
     workingDir asadminDir;
     commandLine asadminFile;
- 
+
     args "stop-domain"
 }
- 
+
 task redeploy(dependsOn: 'war', type:Exec) {
     workingDir asadminDir;
     commandLine asadminFile;
- 
+
     args "deploy", "--force=true", "--contextroot=/", "${war.archivePath}";
 }
 
