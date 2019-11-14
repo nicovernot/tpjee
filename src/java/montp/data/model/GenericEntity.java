@@ -11,7 +11,7 @@ import java.util.Objects;
 public abstract class GenericEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE) protected Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE) protected Integer id;
 
     @Override
     public int hashCode() {
@@ -35,12 +35,12 @@ public abstract class GenericEntity implements Serializable {
         return Objects.equals(this.id, other.id);
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
-    
+
 }
