@@ -15,20 +15,5 @@ import java.util.List;
 @Named("index")
 public class IndexView implements Serializable {
 
-    @Inject
-    private ResourceTypeDAO res;
-    private  List<ResourceType> rst;
 
-    @PostConstruct
-    public void init() {
-      rst = res.getAll();
-    }
-    public Collection<ResourceType> getRestyp() {
-
-        return res.getAll();
-    }
-
-    public int getCoutrestype(){
-        return res.getCount();
-    }
 }

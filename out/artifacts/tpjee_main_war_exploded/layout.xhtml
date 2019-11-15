@@ -14,29 +14,20 @@
             <p:growl id="messages"/>
 
             <p:menubar>
-                <p:submenu label="File" icon="pi pi-file">
-                    <p:submenu label="New" icon="pi pi-briefcase">
-                        <p:menuitem value="Project" url="#" />
-                        <p:menuitem value="Other" url="#" />
+                <p:menuitem value="Accueil" icon="pi pi-home" outcome="index" />
+                <p:submenu label="reservations" icon="pi pi-file">
+                    <p:submenu label="Consulter" icon="pi pi-briefcase">
+                        <p:menuitem value="Liste reservations" outcome="reservations" />
                     </p:submenu>
-                    <p:menuitem value="Open" url="#" />
-                    <p:separator />
-                    <p:menuitem value="Quit" url="#" />
+                  </p:submenu>
+
+                <p:submenu label="Resources" icon="pi pi-pencil">
+                    <p:menuitem value="Liste resources" outcome="resources" icon="pi pi-angle-double-left" />
                 </p:submenu>
 
-                <p:submenu label="Edit" icon="pi pi-pencil">
-                    <p:menuitem value="Undo" url="#" icon="pi pi-angle-double-left" />
-                    <p:menuitem value="Redo" url="#" icon="pi pi-angle-double-right" />
-                </p:submenu>
+                <p:submenu label="Type resources" icon="pi pi-question">
+                    <p:menuitem value="Type resources" outcome="typeresource" />
 
-                <p:submenu label="Help" icon="pi pi-question">
-                    <p:menuitem value="Contents" url="#" />
-                    <p:submenu label="Search" icon="pi pi-search">
-                        <p:submenu label="Text">
-                            <p:menuitem value="Workspace" url="#" />
-                        </p:submenu>
-                        <p:menuitem value="File" url="#" />
-                    </p:submenu>
                 </p:submenu>
 
                 <p:submenu label="Actions" icon="pi pi-cog">

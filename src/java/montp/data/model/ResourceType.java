@@ -2,12 +2,13 @@ package montp.data.model;
 
 
 import com.sun.istack.internal.NotNull;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
+
+
 public class ResourceType extends GenericEntity {
     @Id
     @GeneratedValue
