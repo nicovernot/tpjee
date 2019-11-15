@@ -5,6 +5,8 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="./layout.xhtml">
     <ui:define name="content">
+
+
         <h1>Mon TP</h1>
         <p:panel id="basic" header="Basic" footer="Movie Details" style="margin-bottom:20px">
             <h:panelGrid columns="2" cellpadding="10">
@@ -16,7 +18,75 @@
                 but given to ruthless violence whenever anything stands against the good of the family." />
             </h:panelGrid>
         </p:panel>
+
+        <h:form id="formJoueurs">
+        <p:growl id="messages" autoUpdate="true"/>
+        <p:commandButton icon="fa fa-plus"
+                         value="Ajouter un joueur"
+                         actionListener="#{editerRessourceType.create}"
+                         process="@this"
+                         oncomplete="PF('dialogAjouterJoueur').show()"
+                         update="dialogAjouterJoueur"/>
+
+            <p:confirmDialog global="true">
+                <p:commandButton value="Oui"
+                                 type="button"
+                                 styleClass="ui-confirmdialog-yes"
+                                 icon="fa fa-check"/>
+            </p:confirmDialog>
+
+
+
+        </h:form>
+
+        <p:dialog widgetVar="dialogAjouterJoueur"
+                  id='dialogAjouterJoueur'
+                  header="#{resourceType.id == null ? 'Nouveau joueur' : 'Modification de ' += resourceType}"
+                  modal="true"
+                  closeOnEscape="true">
+        <h:form id="formAjouterResourcetype">
+            <h:panelGrid columns="2" cellpadding="5">
+
+                <p:outputLabel for="nom" value="Nom:"/>
+                <p:inputText id="nom"
+                             size="30"
+                             value="#{resourceType.nom}"
+                             required="true"
+                             requiredMessage="Le nom est obligatoire"/>
+                <p:outputLabel for="type" value="Type:"/>
+                <p:inputText id="type"
+                             size='30'
+                             value='#{resourceType.type}'
+                             required="true"
+                             requiredMessage="Le prénom est obligatoire"/>
+                <p:spacer/>
+
+            </h:panelGrid>
+            <p:commandButton value="#{editerRessourceType.resourceType.id == null ? 'Ajouter' : 'Enregistrer'}"
+                             action="#{editerRessourceType.save}"
+                             oncomplete="if (!args.validationFailed) PF('dialogAjouterJoueur').hide()"
+                             update="@form,formJoueurs:messages,tableJoueurs"/>
+        </h:form>
+        </p:dialog>
 #{request.getParameter("nom")}
+#{index.coutrestype}
+        <p:dataList
+            id="tableJoueurs"
+            widgetVar="tableJoueurs"
+            value="#{index.restyp}" var="rt" type="ordered">
+            <f:facet name="header">
+                Basic
+            </f:facet>
+            #{rt.nom}, #{rt.type}
+            <p:button value="With Icon" icon="pi pi-star" style="margin-right:20px;">
+                <f:param name="productId" value="#{rt.id}" />
+            </p:button>
+        </p:dataList>
+        <h:outputText
+            value="#{session.creationTime}" />
+
+        #{request.getParameter("roductId")=="20"}
     </ui:define>
+
 </ui:composition>
 

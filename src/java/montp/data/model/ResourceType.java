@@ -29,21 +29,6 @@ public class ResourceType extends GenericEntity {
         this.partage = partage;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ResourceType that = (ResourceType) o;
-        return Objects.equals(id, that.id) &&
-            Objects.equals(nom, that.nom) &&
-            Objects.equals(type, that.type) &&
-            Objects.equals(partage, that.partage);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nom, type, partage);
-    }
 
     public Integer getId() {
         return id;
@@ -75,5 +60,14 @@ public class ResourceType extends GenericEntity {
 
     public void setPartage(Boolean partage) {
         this.partage = partage;
+    }
+
+    @Override
+    public String toString() {
+        return "ResourceType{" +
+            "nom='" + nom + '\'' +
+            ", type='" + type + '\'' +
+            ", partage=" + partage +
+            '}';
     }
 }
