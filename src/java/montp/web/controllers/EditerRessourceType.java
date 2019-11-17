@@ -40,13 +40,15 @@ public void  create(){
         }
     }
 
-public ResourceType getResourceType(){
+public ResourceType getresourceType(){
     return resourceType;
 }
 
-    public void setResourceType(ResourceType resourceType) {
+    public void setresourceType(ResourceType resourceType) {
         this.resourceType = resourceType;
     }
+
+
 
     public void delete(ResourceType resourceType) {
         try {

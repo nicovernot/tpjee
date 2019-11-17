@@ -4,6 +4,7 @@ package montp.data.model;
 import com.sun.istack.internal.NotNull;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -20,6 +21,8 @@ public class ResourceType extends GenericEntity {
     private String type;
     @NotNull
     private Boolean partage;
+    @OneToMany
+    private List<Resource> resourceList;
 
     public ResourceType() {
     }

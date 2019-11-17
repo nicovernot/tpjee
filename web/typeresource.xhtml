@@ -66,7 +66,7 @@
 
                 </h:panelGrid>
                 <p:commandButton value="#{editerRessourceType.resourceType.id == null ? 'Ajouter' : 'Enregistrer'}"
-                                 action="#{editerRessourceType.save}"
+                                 action="#{editerRessourceType.save()}"
                                  oncomplete="if (!args.validationFailed) PF('dialogAjouterJoueur').hide()"
                                  update="@form,formJoueurs:messages,tableJoueurs"/>
             </h:form>
@@ -89,7 +89,7 @@
                 </p:commandButton>
                 <p:commandButton icon="fa fa-edit"
                                  title="Modifier"
-                                 actionListener="#{editerRessourceType.update(rt)}"
+                                 actionListener="#{editerRessourceType.setresourceType(rt)}"
                                  oncomplete="PF('dialogAjouterJoueur').show()"
                                  update="dialogAjouterJoueur"/>
             </p:column>

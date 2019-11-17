@@ -10,14 +10,17 @@ public class Resource extends GenericEntity {
     private int capacite;
     @OneToOne
     private Person adminressource;
+    @ManyToOne
+    private ResourceType resourceType;
 
     public Resource() {
     }
 
-    public Resource(String nom, int capacite, Person adminressource) {
+    public Resource(String nom, int capacite, Person adminressource, ResourceType resourceType) {
         this.nom = nom;
         this.capacite = capacite;
         this.adminressource = adminressource;
+        this.resourceType = resourceType;
     }
 
     public String getNom() {

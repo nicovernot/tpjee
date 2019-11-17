@@ -4,6 +4,7 @@ import montp.data.model.ResourceType;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -22,6 +23,19 @@ public class ResourceTypeDAO extends GenericDAO<ResourceType> {
     public List<ResourceType> getAll() {
         return em.createQuery("SELECT e FROM ResourceType e")
             .getResultList();
+    }
+
+    public Boolean isEmpty(ResourceType resourceType){
+try {
+    return ((Long) em.createQuery(
+        "SELECT COUNT(e) FROM Resource e WHERE e.resourceType = :j")
+        .setParameter("j", resourceType)
+        .getSingleResult()) > 0;
+
+} catch (NoResultException e){
+    return null;
+}
+
     }
 
     public int getCount() {

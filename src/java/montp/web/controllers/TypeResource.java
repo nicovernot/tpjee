@@ -32,7 +32,9 @@ public class TypeResource implements Serializable {
         return res.getAll();
     }
 
-
+    public boolean canDelete(ResourceType resourceType) {
+        return !res.isEmpty(resourceType);
+    }
 
     public int getCoutrestype(){
         return res.getCount();
