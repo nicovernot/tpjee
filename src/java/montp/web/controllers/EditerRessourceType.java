@@ -10,6 +10,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.transaction.TransactionalException;
 import java.io.Serializable;
 
 
@@ -46,4 +47,28 @@ public ResourceType getResourceType(){
     public void setResourceType(ResourceType resourceType) {
         this.resourceType = resourceType;
     }
+
+    public void delete(ResourceType resourceType) {
+        try {
+
+            dao.delete(resourceType);
+        } catch (TransactionalException txe) {
+            FacesTools.addMessage(FacesMessage.SEVERITY_ERROR,
+                "Impossible de supprimer la resourcetype %s car il fait partie il y a des resources de ce type",
+                resourceType);
+        }
+    }
+    public void update(ResourceType resourceType) {
+        try {
+
+            dao.update(resourceType);
+        } catch (TransactionalException txe) {
+            FacesTools.addMessage(FacesMessage.SEVERITY_ERROR,
+                "Impossible de metre à jour la resourcetype %s car il fait partie il y a des resources de ce type",
+                resourceType);
+        }
+    }
+
 }
+
+

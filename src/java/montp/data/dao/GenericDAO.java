@@ -36,6 +36,7 @@ public abstract class GenericDAO<T extends GenericEntity> {
 
     @Transactional
     public void delete(T instance) {
+
         em.remove(em.find(instanceClass, instance.getId()));
     }
 
