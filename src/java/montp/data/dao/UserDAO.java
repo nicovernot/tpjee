@@ -29,6 +29,11 @@ public class UserDAO extends GenericDAO<User> {
                 .getSingleResult();
     }
 
+    public int getCount() {
+        return ((Long) em.createQuery("SELECT COUNT(j) FROM User j")
+            .getSingleResult()).intValue();
+    }
+
     public Group getGroup(String groupname) {
         return em.find(Group.class, groupname);
     }

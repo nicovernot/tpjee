@@ -7,7 +7,8 @@
     <ui:define name="content">
 
 
-        <h1>#{Typeresources.messages.get("app.title")}</h1>
+        <h1>#{msg["app.title"]}</h1>
+
 
         <h:form id="formJoueurs">
             <p:growl id="messages" autoUpdate="true"/>
@@ -37,21 +38,14 @@
             <h:form id="formAjouterResourcetype">
                 <h:panelGrid columns="2" cellpadding="5">
 
-                    <p:outputLabel for="nom" value="Nom:"/>
-                    <p:inputText id="nom"
-                                 size="30"
-                                 value="#{resourceType.nom}"
-                                 required="true"
-                                 requiredMessage="Le nom est obligatoire"/>
+
                     <p:outputLabel for="type" value="Type:"/>
                     <p:inputText id="type"
                                  size='30'
                                  value='#{resourceType.type}'
                                  required="true"
                                  requiredMessage="Le prénom est obligatoire"/>
-                    <p:selectBooleanCheckbox value="#{resourceType.partage}" itemLabel="Ajax">
 
-                    </p:selectBooleanCheckbox>
                     <p:spacer/>
 
                 </h:panelGrid>
@@ -85,20 +79,13 @@
                                  update="dialogAjouterJoueur"/>
             </p:column>
 
-            <p:column headerText="Year">
-                <h:outputText value="#{rt.nom}" />
-            </p:column>
+
 
             <p:column headerText="Brand">
                 <h:outputText value="#{rt.type}" />
             </p:column>
 
-            <p:column headerText="Color">
-                #{rt.partage}
-                <c:if test="#{rt.partage}">
-                    <i class="pi pi-check"></i>
-                </c:if>
-            </p:column>
+
         </p:dataTable>
         <h:outputText
             value="#{session.creationTime}" />
