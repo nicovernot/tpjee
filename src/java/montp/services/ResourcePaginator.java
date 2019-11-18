@@ -22,7 +22,14 @@ public class ResourcePaginator extends LazyDataModel<Resource> implements Serial
                                String sortField, SortOrder sortOrder,
                                Map<String, Object> filters) {
 
-        return  null;
+        if (filters.isEmpty()) {
+            setRowCount(resourceDao.getCount());
+            return resourceDao.get(first, pageSize);
+        } else {
+           // boolean isactif = (Boolean)filters.get("actif");
+            setRowCount(resourceDao.getCount());
+            return resourceDao.get(first, pageSize);
+        }
     }
 
 

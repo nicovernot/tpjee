@@ -24,6 +24,8 @@ public class Seeder {
     private ResourceTypeService resourceTypeService;
     @Inject
     private ResourceTypeDAO resourceTypeDAO;
+    @Inject
+    private UserService userService;
     @PersistenceContext
     private EntityManager em;
 
@@ -36,18 +38,19 @@ public class Seeder {
         res.setType("salle");
         resourceTypeDAO.insert(res);
 
-       // if (userService.getGroup("USER") == null) {
-      //      Group groupUser = new Group("USER");
-       //     em.persist(groupUser);
-      //      Group groupAdmin = new Group("ADMIN");
-        //    em.persist(groupAdmin);
-       //     User userAdmin = new User("admin", "admin");
-        //    List<Group> groupes = new ArrayList<>();
-       //     groupes.add(groupUser);
-       //     groupes.add(groupAdmin);
-        //    userAdmin.setGroups(groupes);
+        if (userService.getGroup("USER") == null) {
+            Group groupUser = new Group("USER");
+            em.persist(groupUser);
+            Group groupAdmin = new Group("ADMIN");
+            em.persist(groupAdmin);
+            User userAdmin = new User("admin", "admin");
+            List<Group> groupes = new ArrayList<>();
+            groupes.add(groupUser);
+            groupes.add(groupAdmin);
+            userAdmin.setGroups(groupes);
 
         }
+    }
     }
 
 

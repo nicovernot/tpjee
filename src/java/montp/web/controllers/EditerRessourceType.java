@@ -50,16 +50,7 @@ public ResourceType getresourceType(){
 
 
 
-    public void delete(ResourceType resourceType) {
-        try {
 
-            dao.delete(resourceType);
-        } catch (TransactionalException txe) {
-            FacesTools.addMessage(FacesMessage.SEVERITY_ERROR,
-                "Impossible de supprimer la resourcetype %s car il fait partie il y a des resources de ce type",
-                resourceType);
-        }
-    }
     public void update(ResourceType resourceType) {
         try {
 
@@ -70,6 +61,8 @@ public ResourceType getresourceType(){
                 resourceType);
         }
     }
+
+
 
 }
 
