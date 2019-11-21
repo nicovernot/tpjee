@@ -11,7 +11,7 @@ public class GenericService<T extends GenericEntity, DAO extends GenericDAO<T>> 
     @Inject
     protected DAO dao;
 
-    public T get(long id) { return dao.get(id); }
+    public T get(int id) { return dao.get(id); }
 
     @Transactional
     public void insert(T instance) { dao.insert(instance); }

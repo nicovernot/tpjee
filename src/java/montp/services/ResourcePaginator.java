@@ -26,13 +26,11 @@ public class ResourcePaginator extends LazyDataModel<Resource> implements Serial
             setRowCount(resourceDao.getCount());
             return resourceDao.get(first, pageSize);
         } else {
-           // boolean isactif = (Boolean)filters.get("actif");
-            setRowCount(resourceDao.getCount());
-            return resourceDao.get(first, pageSize);
+           String nom = (String) filters.get("nom");
+            setRowCount(resourceDao.getCount(nom));
+            return resourceDao.get(first, pageSize,nom);
         }
     }
-
-
 
 
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 @ApplicationScoped
 public class ResourceTypeService extends GenericService<ResourceType, ResourceTypeDAO>{
-    public List<ResourceType> getUsers() {
+    public List<ResourceType> getresourcetypes() {
         return dao.getAll();
     }
 

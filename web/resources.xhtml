@@ -6,7 +6,111 @@
                 template="./layout.xhtml">
 
     <ui:define name="content">
-       resources
+        <p:panel>
+            <h:form id="formResources">
+                <p:growl id="messages" autoUpdate="true"/>
+                <p:commandButton icon="fa fa-plus"
+                                 value="Ajouter une resource"
+                                 actionListener="#{editerresource.Create}"
+                                 process="@this"
+                                 oncomplete="PF('dialogAjouterresource').show()"
+                                 update="dialogAjouterresource"/>
+                <p:confirmDialog global="true">
+                    <p:commandButton value="Oui"
+                                     type="button"
+                                     styleClass="ui-confirmdialog-yes"
+                                     icon="fa fa-check"/>
+                </p:confirmDialog>
+
+
+
+
+        <p:dataTable id="tableresources"
+                     widgetVar="tableresources"
+                     var="j"
+                     lazy="true"
+                     paginator="true" rows="5"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+
+                     value="#{resourceView.resources}">
+            <p:column filterBy="#{j.nom}" headerText="resource">
+                <f:facet name="filter">
+                    <p:selectOneMenu onchange="PF('tableresources').filter()" styleClass="custom-filter">
+                        <f:selectItems value="#{editerresource.resources}" var="r" itemValue="#{r.nom}"/>
+                    </p:selectOneMenu>
+                </f:facet>
+                #{j.nom}
+            </p:column>
+            <p:column headerText="Resource Type">
+              #{j.resourceType.type}
+            </p:column>
+            <p:column headerText="Admin">
+                #{j.adminressource.nom}
+            </p:column>
+            <p:column headerText="Capacité">
+                #{j.capacite}
+            </p:column>
+            <p:column headerText="Partagé">
+                <p:toggleSwitch disabled="true" value="#{j.partage}">
+                </p:toggleSwitch>
+            </p:column>
+            <p:column headerText="Action">
+                <p:link outcome="reservations" value="reserver #{j.nom}">
+                    <f:param name="productId" value=" #{j.id}" />
+                </p:link>
+
+            </p:column>
+        </p:dataTable>
+
+            </h:form>
+        </p:panel>
+        <p:dialog widgetVar="dialogAjouterresource"
+                  id='dialogAjouterresource'
+                  header="#{resource.id == null ? 'Nouvelle resource' : 'Modification de ' += resource}"
+                  modal="true"
+                  closeOnEscape="true">
+            <h:form id="formAjouterresource">
+                <h:panelGrid columns="2" cellpadding="5">
+                    <p:outputLabel for="typeresource" filterBy="#{j.resourceType}" value="TypeResource:"/>
+                    <p:selectOneMenu id="typeresource"
+                                     value="#{editerresource.resource.resourceType}"
+                                     rendered="#{editerresource.resource.resourceType!=null}"
+                                     required="true">
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItems value="#{editerRessourceType.resourceTypes}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel for="nom" value="Nom:"/>
+                    <p:inputText id="nom"
+                                 size="30"
+                                 value="#{editerresource.resource.nom}"
+                                 required="true"
+                                 requiredMessage="Le nom est obligatoire"/>
+                    <p:outputLabel for="capacite" value="Capacité:"/>
+                    <p:inputText id="capacite"
+                                 size='30'
+                                 value='#{editerresource.resource.capacite}'
+                                 required="true"
+                                 requiredMessage="La capacité est obligatoire"/>
+                    <p:outputLabel for="adminresource" value="admin:"/>
+                    <p:selectOneMenu id="adminresource"
+                                     value="#{editerresource.resource.adminressource}"
+                                     rendered="#{editerresource.resource.adminressource!=null}"
+                                     required="true">
+                        <f:selectItem itemLabel="Select One" itemValue="" />
+                        <f:selectItems value="#{editerPerson.persons}" />
+                    </p:selectOneMenu>
+                    <p:spacer/>
+                    <p:selectBooleanButton id="actif"
+                                           value="#{editerresource.resource.partage}"
+                                           onLabel="Paratagée"
+                                           offLabel="Inactif"/>
+                </h:panelGrid>
+                <p:commandButton value="#{editerresource.resource.id == null ? 'Ajouter' : 'Enregistrer'}"
+                                 action="#{editerresource.save()}"
+                                 oncomplete="if (!args.validationFailed) PF('dialogAjouterresource').hide()"
+                                 update="@form,formResources:messages,formResources:tableresources"/>
+            </h:form>
+        </p:dialog>
     </ui:define>
 
 </ui:composition>

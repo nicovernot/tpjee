@@ -1,9 +1,6 @@
 package montp.data;
 
-import montp.data.dao.GroupDAO;
-import montp.data.dao.ResourceDao;
-import montp.data.dao.ResourceTypeDAO;
-import montp.data.dao.UserDAO;
+import montp.data.dao.*;
 import montp.data.model.Person;
 import montp.data.model.Resource;
 import montp.data.model.ResourceType;
@@ -44,22 +41,13 @@ public class Seeder {
     @Inject
     ResourceDao resourceDao;
     private Resource resource;
+    @Inject
+    PersonDAO personDAO;
 
 
     @PostConstruct
     public void init() {
-        String [] typrestab = {"Grande salle",  "Moyenne salle",  "petite sale","voiture","projecteur","bus"} ;
 
-    if (resourceTypeDAO.getCount()==0) {
-           for (int i=0;i<typrestab.length;i++){
-               ResourceType res = new ResourceType();
-
-               res.setType(typrestab[i]);
-
-               resourceTypeDAO.insert(res);
-           }
-
-       }
 
 
         if (userService.getGroup("USER") == null) {
@@ -102,15 +90,16 @@ public class Seeder {
 
                 throw e;
             }
-
-        if(resourceDao.getCount()==0){
-
-          for (int i=0;i<30;i++){
-              //resource.setAdminressource();
-
-          }
-
-
+        List<User> userList = userDAO.getUsers();
+            System.out.print("test sortie----------->");
+            System.out.print("test sortie----------->");
+            System.out.print(userList.size());
+        for (int l=0;l<userList.size();l++){
+            Person person = new Person();
+            person.setNom(userList.get(l).getUserName());
+            person.setPrenom(userList.get(l).getUserName()+l);
+            person.setUser(userList.get(l));
+            personDAO.insert(person);
         }
 
 
@@ -129,7 +118,44 @@ public class Seeder {
         //}
 
 
+        String [] typrestab = {"Grande salle",  "Moyenne salle",  "petite sale","voiture","projecteur","bus"} ;
+        String [] typrestab1 = {"satar",  "sune",  "esperpetile","carture","surjecteur","transbus"} ;
+        if (resourceTypeDAO.getCount()==0) {
+            for (int i=0;i<typrestab.length;i++){
+                ResourceType res = new ResourceType();
+
+                res.setType(typrestab[i]);
+                resourceTypeDAO.insert(res);
+
+             }
+            for (int l=0;l<6;l++) {
+                for (int t = 0; t < 6; t++) {
+
+                    List<Person> personList = personDAO.getAll();
+                    List<ResourceType> resourceTypeList = resourceTypeDAO.getAll();
+                    Resource resource = new Resource();
+                    resource.setAdminressource(personList.get(t));
+                    int gencap = ((int) (Math.random() * (40 - 1)));
+                    resource.setCapacite(gencap);
+                    resource.setNom(typrestab1[t] + gencap);
+                    resource.setPartage(true);
+                    resource.setAdminressource(personList.get(l));
+                    resource.setResourceType(resourceTypeList.get(t));
+                    resourceDao.insert(resource);
+                    System.out.print("test sortie----------->");
+                    System.out.print(resourceTypeList.size());
+                    System.out.print(personList.size());
+                }
+            }
+
+
+
+
+         }
+
+        }
+
     }
-    }
+
 
 

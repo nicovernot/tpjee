@@ -19,6 +19,7 @@ public class PersonDAO extends GenericDAO<Person>{
     public Person get(int id) {
         return em.find(Person.class, id);
     }
+    public PersonDAO(){super(Person.class);}
     public List<Person> getAll() {
         return em.createQuery("SELECT e FROM Person e")
             .getResultList();

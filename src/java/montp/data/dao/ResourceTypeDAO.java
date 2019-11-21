@@ -16,13 +16,14 @@ import java.util.List;
 public class ResourceTypeDAO extends GenericDAO<ResourceType> {
     @PersistenceContext
     private EntityManager em;
-
     @Inject
     private Event<ResourceType> resourceTypeEvent;
 
     public ResourceType get(int id) {
         return em.find(ResourceType.class, id);
     }
+
+    public ResourceTypeDAO() { super(ResourceType.class);}
 
     public List<ResourceType> getAll() {
         return em.createQuery("SELECT e FROM ResourceType e")

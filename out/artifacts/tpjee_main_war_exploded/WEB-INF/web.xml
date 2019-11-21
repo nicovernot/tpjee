@@ -40,7 +40,16 @@
     <welcome-file-list>
         <welcome-file>app/index.xhtml</welcome-file>
     </welcome-file-list>
-
+    <!--Your comment
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>secure-pages</web-resource-name>
+            <url-pattern>/app/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>USER</role-name>
+        </auth-constraint>
+    </security-constraint>
 
     <security-role>
         <description/>
@@ -50,4 +59,13 @@
         <description/>
         <role-name>ADMIN</role-name>
     </security-role>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>file</realm-name>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/login.xhtml?failed=true</form-error-page>
+        </form-login-config>
+    </login-config>
+-->
 </web-app>

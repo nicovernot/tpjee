@@ -6,6 +6,17 @@
                 template="./layout.xhtml">
     <ui:define name="content">
 reservations
+#{reservations.param}
+
+
+        <h:form>
+            <p:growl id="messages" showDetail="true" />
+
+            <h:panelGrid columnClasses="value">
+                <p:schedule value="#{reservations.lazyEventModel}" />
+            </h:panelGrid>
+        </h:form>
+
     </ui:define>
 
 </ui:composition>

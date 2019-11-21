@@ -8,11 +8,16 @@ import java.util.List;
 @Entity
 public class Resource extends GenericEntity {
 
+    @Id
+    @GeneratedValue
+    @NotNull
+    private Integer id;
+    @NotNull
     private String nom;
     @NotNull
     private Boolean partage;
     private int capacite;
-    @OneToOne
+    @ManyToOne
     private Person adminressource;
     @ManyToOne
     private ResourceType resourceType;
@@ -66,5 +71,10 @@ public class Resource extends GenericEntity {
 
     public void setResourceType(ResourceType resourceType) {
         this.resourceType = resourceType;
+    }
+
+    @Override
+    public String toString() {
+        return nom;
     }
 }

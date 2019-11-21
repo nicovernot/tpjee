@@ -4,26 +4,43 @@ import montp.data.dao.ResourceDao;
 import montp.data.model.Resource;
 import montp.services.ResourcePaginator;
 import montp.web.FacesTools;
-
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.TransactionalException;
 import java.io.Serializable;
+import java.util.List;
 
 @ViewScoped
-@Named("resources")
+@Named
 public class ResourceView implements Serializable {
 
     @Inject
     private ResourceDao resourceDao;
     @Inject
-    private ResourcePaginator resources;
+    private ResourcePaginator resourcesPaginator;
+    private List<Resource> res;
+
+    @PostConstruct
+    public void init() {
+        res = resourceDao.getAll();
+    }
+
+    public List<Resource> getRes() {
+        return res;
+    }
+
+    public void setRes(List<Resource> res) {
+        this.res = res;
+    }
 
     public boolean canDelete(Resource resource) {
         return !resourceDao.canDelete(resource);
     }
+
+
 
     public void delete(Resource resource) {
         try {
@@ -35,7 +52,11 @@ public class ResourceView implements Serializable {
         }
     }
 
- public ResourcePaginator getResources(){
-        return resources;
+    public void setResources(ResourcePaginator resourcesPaginator) {
+        this.resourcesPaginator = resourcesPaginator;
+    }
+
+    public ResourcePaginator getResources(){
+        return resourcesPaginator;
  }
 }

@@ -19,7 +19,7 @@ public abstract class GenericDAO<T extends GenericEntity> {
         this.instanceClass = instanceClass;
     }
 
-    public T get(long id) {
+    public T get(int id) {
         return em.find(instanceClass, id);
     }
 

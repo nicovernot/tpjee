@@ -19,8 +19,7 @@ public class ResourceType extends GenericEntity {
     @NotNull
     private String type;
 
-    @OneToMany
-    private List<Resource> resourceList;
+
 
     public ResourceType() {
     }
@@ -37,11 +36,8 @@ public class ResourceType extends GenericEntity {
         this.type = type;
     }
 
-    public List<Resource> getResourceList() {
-        return resourceList;
-    }
-
-    public void setResourceList(List<Resource> resourceList) {
-        this.resourceList = resourceList;
+    @Override
+    public String toString() {
+        return type;
     }
 }

@@ -21,7 +21,7 @@ public class ResourceDao extends GenericDAO<Resource> {
     public Resource get(int id) {
         return em.find(Resource.class, id);
     }
-
+    public ResourceDao(){super(Resource.class);}
     public List<Resource> get(int start, int limit, boolean isactif) {
         return em.createQuery("SELECT j FROM Resource j ORDER BY j.nom, j.capacite")
 
@@ -36,20 +36,29 @@ public class ResourceDao extends GenericDAO<Resource> {
             .setMaxResults(limit)
             .getResultList();
     }
+
+    public List<Resource> get(int satrt,int limit, String nom){
+     return  em.createQuery("SELECT j from Resource j WHERE j.nom=:nom ")
+     .setParameter("nom",nom)
+     .getResultList();
+    }
     public List<Resource> getAll() {
         return em.createQuery("SELECT e FROM Resource e")
             .getResultList();
     }
-    public int getCount(boolean isactif) {
-        return ((Long) em.createQuery("SELECT COUNT(j) FROM Resource j WHERE j.capacite=:actif")
-            .setParameter("actif", isactif)
-            .getSingleResult()).intValue();
-    }
+
 
     public int getCount() {
         return ((Long) em.createQuery("SELECT COUNT(j) FROM Resource j")
             .getSingleResult()).intValue();
     }
+    public int getCount(String nom ){
+        System.out.print(nom);
+        return (int) em.createQuery("SELECT j from Resource  j WHERE j.nom=:nom")
+            .setParameter("nom",nom)
+            .getSingleResult();
+    }
+
     @Transactional
     public void delete(Resource res) {
         res = get(res.getId());

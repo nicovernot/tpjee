@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.TransactionalException;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 
 @ViewScoped
@@ -40,7 +42,7 @@ public void  create(){
         }
     }
 
-public ResourceType getresourceType(){
+public ResourceType getResourceType(){
     return resourceType;
 }
 
@@ -48,7 +50,9 @@ public ResourceType getresourceType(){
         this.resourceType = resourceType;
     }
 
-
+    public List<ResourceType> getResourceTypes() {
+        return dao.getAll();
+    }
 
 
     public void update(ResourceType resourceType) {
