@@ -9,6 +9,7 @@ import montp.data.model.security.User;
 import montp.services.ResourceTypeService;
 import montp.services.UserService;
 import montp.tools.Logger;
+import montp.tools.Tools;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -48,7 +49,7 @@ public class Seeder {
     @PostConstruct
     public void init() {
 
-
+        String [] names = {"jean",  "piere",  "marie","tom","louis","monique","tina","louisa","jean1",  "piere1",  "marie1","tom1","mouis","monique","tina","louisa"} ;
 
         if (userService.getGroup("USER") == null) {
             Group groupUser = new Group("USER");
@@ -64,36 +65,24 @@ public class Seeder {
         }
         if (userDAO.getCount()==0) {
             try {
-                User user = new User();
-                user.setOldPassword("najv");
-                user.setPassword("najv");
-                user.setUserName("nico");
-                userDAO.insert(user);
-                em.createNativeQuery("insert into security_user (id, oldpassword, password, username) values (2, 'njJ4jTjR', 'ie37afDVcpv', 'Birch');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (3, '7mm8RExo', 'kthYe0', 'Elmer');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (4, 'f3rfWrRPH9UM', 'NLs1YG2X2V', 'Ansell');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (5, 'juNHrs', '8RU5YOMqe', 'Demetrius');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (6, '5iwXHcu9Z', 'sJeb9Mg', 'Therese');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (7, 'pIr0h77', 'b8JvFLUw', 'Holly-anne');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (8, 'pRlzmgnd', 'e4LIOIIsi', 'Moina');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (9, 'tcDn5egdEY4m', 'F8iBfFibkO', 'Eyde');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (10, 'FfJNc7U', 'LksP8DjK', 'Lissa');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (11, '6S7JpWjFz0', '2UlIMV', 'Olivette');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (12, '1hudcCts', 'z5cP87d', 'Etty');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (13, 'Aiu6pQAV', '9Ac92uoy9v7p', 'Rudyard');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (14, 'Tp60DZpWfED', '8ieoyrioEzOC', 'Viviyan');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (15, 'lZZf9BHOSChw', 'uvOy0srBLd6e', 'Talbert');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (16, 'cHCiNxYVm23', 'laUyPrqK', 'Jean');\n" +
-                    "insert into security_user (id, oldpassword, password, username) values (17, 'Xux0i6mKipDf', 'oSHxYOzf2unT', 'Roderick')").executeUpdate();
+
+      for (int p=0 ; p<16 ;p++){
+          User user = new User();
+          user.setOldPassword("najv");
+          user.setPassword(Tools.digestSHA256Hex("najv"));
+          user.setUserName(names[p]+p);
+          userDAO.insert(user);
+      }
+
+
+
 
             } catch (Throwable e){
 
                 throw e;
             }
         List<User> userList = userDAO.getUsers();
-            System.out.print("test sortie----------->");
-            System.out.print("test sortie----------->");
-            System.out.print(userList.size());
+
         for (int l=0;l<userList.size();l++){
             Person person = new Person();
             person.setNom(userList.get(l).getUserName());
@@ -104,18 +93,6 @@ public class Seeder {
 
 
         }
-
-      //List<User> userList = userDAO.getUsers();
-      //List<Group> groupList = null;
-      //groupList.add(groupDAO.getByName("USER"));
-     //System.out.print(groupList.get(1).getGroupName()+"testnom");
-
-       // for (User user : userList){
-
-         //user.setGroups(groupList);
-        // userDAO.insert(user);
-
-        //}
 
 
         String [] typrestab = {"Grande salle",  "Moyenne salle",  "petite sale","voiture","projecteur","bus"} ;

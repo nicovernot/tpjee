@@ -40,16 +40,32 @@
     <welcome-file-list>
         <welcome-file>app/index.xhtml</welcome-file>
     </welcome-file-list>
-    <!--Your comment
+
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>secure-pages</web-resource-name>
-            <url-pattern>/app/*</url-pattern>
+            <web-resource-name>index</web-resource-name>
+            <url-pattern>/app/index.xhtml</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <role-name>USER</role-name>
+            <role-name>ADMIN</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <display-name>anonymes</display-name>
+        <web-resource-collection>
+            <web-resource-name>resources</web-resource-name>
+            <description/>
+            <url-pattern>/app/javax.faces.resource/*</url-pattern>
+        </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>login</web-resource-name>
+            <description/>
+            <url-pattern>/app/login.xhtml</url-pattern>
+        </web-resource-collection>
+
+    </security-constraint>
+
 
     <security-role>
         <description/>
@@ -61,11 +77,11 @@
     </security-role>
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>file</realm-name>
+        <realm-name>jdbcRealm</realm-name>
         <form-login-config>
-            <form-login-page>/login.xhtml</form-login-page>
-            <form-error-page>/login.xhtml?failed=true</form-error-page>
+            <form-login-page>/app/login.xhtml</form-login-page>
+            <form-error-page>/app/login.xhtml?failed=true</form-error-page>
         </form-login-config>
     </login-config>
--->
+
 </web-app>
