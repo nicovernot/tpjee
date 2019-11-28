@@ -4,16 +4,14 @@ import montp.data.dao.PersonDAO;
 import montp.data.dao.ResourceDao;
 import montp.data.dao.ResourceTypeDAO;
 import montp.data.model.Resource;
-import montp.data.model.ResourceType;
 import montp.web.FacesTools;
-
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.Collection;
+
 import java.util.List;
 
 @ViewScoped

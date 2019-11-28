@@ -1,20 +1,21 @@
 package montp.data.model;
 
-import com.sun.istack.internal.NotNull;
+
 
 import javax.persistence.*;
-import java.util.List;
+
 
 @Entity
 public class Resource extends GenericEntity {
 
     @Id
     @GeneratedValue
-    @NotNull
+
     private Integer id;
-    @NotNull
+    @Col1
+
     private String nom;
-    @NotNull
+
     private Boolean partage;
     private int capacite;
     @ManyToOne

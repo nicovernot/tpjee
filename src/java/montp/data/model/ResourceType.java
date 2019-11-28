@@ -1,7 +1,7 @@
 package montp.data.model;
 
 
-import com.sun.istack.internal.NotNull;
+
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,10 +13,10 @@ import java.util.Objects;
 public class ResourceType extends GenericEntity {
     @Id
     @GeneratedValue
-    @NotNull
+
     private Integer id;
 
-    @NotNull
+
     private String type;
 
 

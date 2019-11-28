@@ -15,7 +15,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Arrays;
 import java.util.Date;
+
+import static java.lang.Class.forName;
 
 @ViewScoped
 @Named("reservations")
@@ -56,6 +58,9 @@ public class ReservationsView implements Serializable  {
                     Date now = Date.from(Instant.now());
                     addEvent(new DefaultScheduleEvent("Lazy Event " + i, random, now));
                 }
+
+                System.out.println("tete"+Arrays.toString(Resource.class.getAnnotations()));
+
             }
         };
     }
@@ -76,6 +81,7 @@ public class ReservationsView implements Serializable  {
 
     public void addEvent() {
         System.out.print(event.getEndDate().toString()+" "+event.getStartDate().toString()+event.getTitle());
+
         if(event.getId() == null)
             eventModel.addEvent(event);
         else

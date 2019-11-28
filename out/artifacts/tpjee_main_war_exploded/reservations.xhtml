@@ -7,7 +7,7 @@
     <ui:define name="content">
 reservations
 #{reservations.param}
-        #{reservations.resource.nom}
+        #{reservations.resource["partage"]}
 
         <h:form>
             <p:growl id="messages" showDetail="true" />
