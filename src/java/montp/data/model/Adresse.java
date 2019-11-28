@@ -99,4 +99,13 @@ public class Adresse extends GenericEntity{
   // Other methods
   //
 
+    @Override
+    public String toString() {
+        return "Adresse{" +
+            "rue='" + rue + '\'' +
+            ", numeroRue=" + numeroRue +
+            ", codePostal='" + codePostal + '\'' +
+            ", ville='" + ville + '\'' +
+            '}';
+    }
 }

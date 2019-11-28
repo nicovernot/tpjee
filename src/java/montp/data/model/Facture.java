@@ -145,4 +145,11 @@ public class Facture extends GenericEntity {
     public void setLignesFacturation(List<LignesFacturation> lignesFacturation) {
         this.lignesFacturation = lignesFacturation;
     }
+
+    @Override
+    public String toString() {
+        return "Facture{" +
+            "etatFacture=" + etatFacture +
+            '}';
+    }
 }

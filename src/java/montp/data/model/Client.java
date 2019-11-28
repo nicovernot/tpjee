@@ -135,4 +135,11 @@ public class Client extends GenericEntity{
   // Other methods
   //
 
+    @Override
+    public String toString() {
+        return "Client{" +
+            "nom='" + nom + '\'' +
+            ", prenom='" + prenom + '\'' +
+            '}';
+    }
 }

@@ -48,4 +48,10 @@ public class StatuProjet extends GenericEntity{
   // Other methods
   //
 
+    @Override
+    public String toString() {
+        return "StatuProjet{" +
+            "type='" + type + '\'' +
+            '}';
+    }
 }

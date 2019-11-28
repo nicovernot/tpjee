@@ -202,4 +202,11 @@ public class Utilisateur extends GenericEntity{
   // Other methods
   //
 
+    @Override
+    public String toString() {
+        return "Utilisateur{" +
+            "nom='" + nom + '\'' +
+            ", prenom='" + prenom + '\'' +
+            '}';
+    }
 }

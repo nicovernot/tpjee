@@ -48,4 +48,10 @@ public class Statut extends GenericEntity {
   // Other methods
   //
 
+    @Override
+    public String toString() {
+        return "Statut{" +
+            "type='" + type + '\'' +
+            '}';
+    }
 }

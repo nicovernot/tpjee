@@ -48,4 +48,10 @@ public class EtatFacture extends GenericEntity{
   // Other methods
   //
 
+    @Override
+    public String toString() {
+        return "EtatFacture{" +
+            "etat='" + etat + '\'' +
+            '}';
+    }
 }

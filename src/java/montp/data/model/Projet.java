@@ -120,4 +120,11 @@ public class Projet extends GenericEntity {
   // Other methods
   //
 
+    @Override
+    public String toString() {
+        return "Projet{" +
+            "nom='" + nom + '\'' +
+            ", prenom='" + prenom + '\'' +
+            '}';
+    }
 }

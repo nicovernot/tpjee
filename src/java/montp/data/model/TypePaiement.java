@@ -48,4 +48,10 @@ public class TypePaiement extends GenericEntity {
   // Other methods
   //
 
+    @Override
+    public String toString() {
+        return "TypePaiement{" +
+            "typePaiement='" + typePaiement + '\'' +
+            '}';
+    }
 }

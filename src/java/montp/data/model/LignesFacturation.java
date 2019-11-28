@@ -82,4 +82,10 @@ public class LignesFacturation extends GenericEntity {
   // Other methods
   //
 
+    @Override
+    public String toString() {
+        return "LignesFacturation{" +
+            "libelle='" + libelle + '\'' +
+            '}';
+    }
 }
