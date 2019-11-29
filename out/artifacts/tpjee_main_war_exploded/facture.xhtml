@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="./layout.xhtml">
+    <ui:define name="content">
+
+
+        <h1>#{msg["app.title"]}</h1>
+
+
+        <h:form id="formJoueurs">
+            <p:growl id="messages" autoUpdate="true"/>
+            <p:commandButton icon="fa fa-plus"
+                             value="Ajouter un un type de resource"
+                             actionListener="#{factureView.create}"
+                             process="@this"
+                             oncomplete="PF('dialogAjouterJoueur').show()"
+                             update="dialogAjouterJoueur"/>
+
+            <p:confirmDialog global="true">
+                <p:commandButton value="Oui"
+                                 type="button"
+                                 styleClass="ui-confirmdialog-yes"
+                                 icon="fa fa-check"/>
+            </p:confirmDialog>
+
+
+
+        </h:form>
+
+        <p:dialog widgetVar="dialogAjouterJoueur"
+                  id='dialogAjouterJoueur'
+                  header="#{facture.id == null ? 'Nouveau joueur' : 'Modification de ' += facture}"
+                  modal="true"
+                  closeOnEscape="true">
+            <h:form id="formAjouterResourcetype">
+                <h:panelGrid columns="2" cellpadding="5">
+
+
+                    <p:outputLabel for="type" value="Type:"/>
+                    <p:inputText id="type"
+                                 size='30'
+                                 value='#{facture.id}'
+                                 required="true"
+                                 requiredMessage="Le prénom est obligatoire"/>
+
+                    <p:spacer/>
+
+                </h:panelGrid>
+                <p:commandButton value="#{factureView.facture.id == null ? 'Ajouter' : 'Enregistrer'}"
+                                 action="#{factureView.save()}"
+                                 oncomplete="if (!args.validationFailed) PF('dialogAjouterJoueur').hide()"
+                                 update="@form,formJoueurs:messages,tableJoueurs"/>
+            </h:form>
+        </p:dialog>
+
+        <p:dataTable    id="tableJoueurs"
+                        widgetVar="tableJoueurs"
+                        value="#{factureView.restyp}" var="rt" type="ordered">
+            <p:column headerText="Id">
+                <p:commandButton icon="fa fa-trash"
+                                 title="Supprimer"
+                                 actionListener="#{factureView.delete(rt)}"
+                                 update="tableJoueurs"
+                                 process="@this">
+                    <p:confirm header="Supprimer une resource"
+                               message="Supprimer #{rt} ?"
+                               icon="fa fa-question-circle"/>
+                </p:commandButton>
+                <p:commandButton icon="fa fa-edit"
+                                 title="Modifier"
+                                 actionListener="#{factureView.setFacture(rt)}"
+                                 oncomplete="PF('dialogAjouterJoueur').show()"
+                                 update="dialogAjouterJoueur"/>
+            </p:column>
+            <p:column headerText="Brand">
+                <h:outputText value="#{rt.id}" />
+            </p:column>
+        </p:dataTable>
+
+    </ui:define>
+
+</ui:composition>

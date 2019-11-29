@@ -19,34 +19,17 @@ public class StatuProjet extends GenericEntity{
   //
   public StatuProjet () { };
 
-  //
-  // Methods
-  //
+    public StatuProjet(String type) {
+        this.type = type;
+    }
 
+    public String getType() {
+        return type;
+    }
 
-  //
-  // Accessor methods
-  //
-
-  /**
-   * Set the value of type
-   * @param newVar the new value of type
-   */
-  private void setType (String newVar) {
-    type = newVar;
-  }
-
-  /**
-   * Get the value of type
-   * @return the value of type
-   */
-  private String getType () {
-    return type;
-  }
-
-  //
-  // Other methods
-  //
+    public void setType(String type) {
+        this.type = type;
+    }
 
     @Override
     public String toString() {

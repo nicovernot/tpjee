@@ -19,34 +19,17 @@ public class TypePaiement extends GenericEntity {
   //
   public TypePaiement () { };
 
-  //
-  // Methods
-  //
+    public TypePaiement(String typePaiement) {
+        this.typePaiement = typePaiement;
+    }
 
+    public String getTypePaiement() {
+        return typePaiement;
+    }
 
-  //
-  // Accessor methods
-  //
-
-  /**
-   * Set the value of typePaiement
-   * @param newVar the new value of typePaiement
-   */
-  private void setTypePaiement (String newVar) {
-    typePaiement = newVar;
-  }
-
-  /**
-   * Get the value of typePaiement
-   * @return the value of typePaiement
-   */
-  private String getTypePaiement () {
-    return typePaiement;
-  }
-
-  //
-  // Other methods
-  //
+    public void setTypePaiement(String typePaiement) {
+        this.typePaiement = typePaiement;
+    }
 
     @Override
     public String toString() {

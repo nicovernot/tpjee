@@ -8,96 +8,52 @@ import javax.persistence.Entity;
 @Entity
 public class Adresse extends GenericEntity{
 
-  //
-  // Fields
-  //
-
   private String rue;
   private Integer numeroRue;
   private String codePostal;
   private String ville;
 
-  //
-  // Constructors
-  //
-  public Adresse () { };
+    public Adresse() {
+    }
 
-  //
-  // Methods
-  //
+    public Adresse(String rue, Integer numeroRue, String codePostal, String ville) {
+        this.rue = rue;
+        this.numeroRue = numeroRue;
+        this.codePostal = codePostal;
+        this.ville = ville;
+    }
 
+    public String getRue() {
+        return rue;
+    }
 
-  //
-  // Accessor methods
-  //
+    public void setRue(String rue) {
+        this.rue = rue;
+    }
 
-  /**
-   * Set the value of rue
-   * @param newVar the new value of rue
-   */
-  private void setRue (String newVar) {
-    rue = newVar;
-  }
+    public Integer getNumeroRue() {
+        return numeroRue;
+    }
 
-  /**
-   * Get the value of rue
-   * @return the value of rue
-   */
-  private String getRue () {
-    return rue;
-  }
+    public void setNumeroRue(Integer numeroRue) {
+        this.numeroRue = numeroRue;
+    }
 
-  /**
-   * Set the value of numeroRue
-   * @param newVar the new value of numeroRue
-   */
-  private void setNumeroRue (Integer newVar) {
-    numeroRue = newVar;
-  }
+    public String getCodePostal() {
+        return codePostal;
+    }
 
-  /**
-   * Get the value of numeroRue
-   * @return the value of numeroRue
-   */
-  private Integer getNumeroRue () {
-    return numeroRue;
-  }
+    public void setCodePostal(String codePostal) {
+        this.codePostal = codePostal;
+    }
 
-  /**
-   * Set the value of codePostal
-   * @param newVar the new value of codePostal
-   */
-  private void setCodePostal (String newVar) {
-    codePostal = newVar;
-  }
+    public String getVille() {
+        return ville;
+    }
 
-  /**
-   * Get the value of codePostal
-   * @return the value of codePostal
-   */
-  private String getCodePostal () {
-    return codePostal;
-  }
-
-  /**
-   * Set the value of ville
-   * @param newVar the new value of ville
-   */
-  private void setVille (String newVar) {
-    ville = newVar;
-  }
-
-  /**
-   * Get the value of ville
-   * @return the value of ville
-   */
-  private String getVille () {
-    return ville;
-  }
-
-  //
-  // Other methods
-  //
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
 
     @Override
     public String toString() {

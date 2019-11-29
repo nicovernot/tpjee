@@ -12,12 +12,13 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.TransactionalException;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 @ViewScoped
 @Named
-public class AdresseView {
+public class AdresseView implements Serializable {
 
     @Inject
     private AdresseDAO res;

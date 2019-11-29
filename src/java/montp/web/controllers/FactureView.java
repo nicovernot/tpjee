@@ -4,6 +4,7 @@ import montp.data.dao.FactureDAO;
 import montp.data.model.Facture;
 import montp.data.model.Facture;
 import montp.locale.Messages;
+import montp.services.FacturePaginator;
 import montp.web.FacesTools;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -11,18 +12,21 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.TransactionalException;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 @ViewScoped
 @Named
-public class FactureView {
+public class FactureView implements Serializable {
 
     @Inject
     private FactureDAO res;
     private List<Facture> rst;
     private Messages messages;
     private Facture facture;
+    @Inject
+    private FacturePaginator facturePaginator;
     @PostConstruct
     public void init() {
         rst = res.getAll();
@@ -86,5 +90,13 @@ public class FactureView {
                 "Impossible de metre à jour la Facture %s car il fait partie il y a des resources de ce type",
                 facture);
         }
+    }
+
+    public FacturePaginator getFacturePaginator() {
+        return facturePaginator;
+    }
+
+    public void setFacturePaginator(FacturePaginator facturePaginator) {
+        this.facturePaginator = facturePaginator;
     }
 }

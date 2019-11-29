@@ -33,110 +33,63 @@ public class Facture extends GenericEntity {
   //
   public Facture () { };
 
-  //
-  // Methods
-  //
+    public Facture(Projet projet, Date dateEdition, Date datePaiement, String notePage, EtatFacture etatFacture, TypePaiement typePaiement, List<LignesFacturation> lignesFacturation) {
+        this.projet = projet;
+        this.dateEdition = dateEdition;
+        this.datePaiement = datePaiement;
+        this.notePage = notePage;
+        this.etatFacture = etatFacture;
+        this.typePaiement = typePaiement;
+        this.lignesFacturation = lignesFacturation;
+    }
 
+    public Projet getProjet() {
+        return projet;
+    }
 
-  //
-  // Accessor methods
-  //
+    public void setProjet(Projet projet) {
+        this.projet = projet;
+    }
 
-  /**
-   * Set the value of projet
-   * @param newVar the new value of projet
-   */
-  private void setProjet (Projet newVar) {
-    projet = newVar;
-  }
+    public Date getDateEdition() {
+        return dateEdition;
+    }
 
-  /**
-   * Get the value of projet
-   * @return the value of projet
-   */
-  private Projet getProjet () {
-    return projet;
-  }
+    public void setDateEdition(Date dateEdition) {
+        this.dateEdition = dateEdition;
+    }
 
-  /**
-   * Set the value of dateEdition
-   * @param newVar the new value of dateEdition
-   */
-  private void setDateEdition (Date newVar) {
-    dateEdition = newVar;
-  }
+    public Date getDatePaiement() {
+        return datePaiement;
+    }
 
-  /**
-   * Get the value of dateEdition
-   * @return the value of dateEdition
-   */
-  private Date getDateEdition () {
-    return dateEdition;
-  }
+    public void setDatePaiement(Date datePaiement) {
+        this.datePaiement = datePaiement;
+    }
 
-  /**
-   * Set the value of datePaiement
-   * @param newVar the new value of datePaiement
-   */
-  private void setDatePaiement (Date newVar) {
-    datePaiement = newVar;
-  }
+    public String getNotePage() {
+        return notePage;
+    }
 
-  /**
-   * Get the value of datePaiement
-   * @return the value of datePaiement
-   */
-  private Date getDatePaiement () {
-    return datePaiement;
-  }
+    public void setNotePage(String notePage) {
+        this.notePage = notePage;
+    }
 
-  /**
-   * Set the value of notePage
-   * @param newVar the new value of notePage
-   */
-  private void setNotePage (String newVar) {
-    notePage = newVar;
-  }
+    public EtatFacture getEtatFacture() {
+        return etatFacture;
+    }
 
-  /**
-   * Get the value of notePage
-   * @return the value of notePage
-   */
-  private String getNotePage () {
-    return notePage;
-  }
+    public void setEtatFacture(EtatFacture etatFacture) {
+        this.etatFacture = etatFacture;
+    }
 
-  /**
-   * Set the value of etatFacture
-   * @param newVar the new value of etatFacture
-   */
-  private void setEtatFacture (EtatFacture newVar) {
-    etatFacture = newVar;
-  }
+    public TypePaiement getTypePaiement() {
+        return typePaiement;
+    }
 
-  /**
-   * Get the value of etatFacture
-   * @return the value of etatFacture
-   */
-  private EtatFacture getEtatFacture () {
-    return etatFacture;
-  }
-
-  /**
-   * Set the value of typePaiement
-   * @param newVar the new value of typePaiement
-   */
-  private void setTypePaiement (TypePaiement newVar) {
-    typePaiement = newVar;
-  }
-
-  /**
-   * Get the value of typePaiement
-   * @return the value of typePaiement
-   */
-  private TypePaiement getTypePaiement () {
-    return typePaiement;
-  }
+    public void setTypePaiement(TypePaiement typePaiement) {
+        this.typePaiement = typePaiement;
+    }
 
     public List<LignesFacturation> getLignesFacturation() {
         return lignesFacturation;

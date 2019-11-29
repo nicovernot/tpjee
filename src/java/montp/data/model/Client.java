@@ -21,119 +21,65 @@ public class Client extends GenericEntity{
   @ManyToOne
   private Adresse adresse;
 
-  //
-  // Constructors
-  //
-  public Client () { };
+    public Client() {
+    }
 
-  //
-  // Methods
-  //
+    public Client(String nom, String nomContact, String prenom, String tel, String email, Adresse adresse) {
+        this.nom = nom;
+        this.nomContact = nomContact;
+        this.prenom = prenom;
+        this.tel = tel;
+        this.email = email;
+        this.adresse = adresse;
+    }
 
+    public String getNom() {
+        return nom;
+    }
 
-  //
-  // Accessor methods
-  //
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-  /**
-   * Set the value of nom
-   * @param newVar the new value of nom
-   */
-  private void setNom (String newVar) {
-    nom = newVar;
-  }
+    public String getNomContact() {
+        return nomContact;
+    }
 
-  /**
-   * Get the value of nom
-   * @return the value of nom
-   */
-  private String getNom () {
-    return nom;
-  }
+    public void setNomContact(String nomContact) {
+        this.nomContact = nomContact;
+    }
 
-  /**
-   * Set the value of nomContact
-   * @param newVar the new value of nomContact
-   */
-  private void setNomContact (String newVar) {
-    nomContact = newVar;
-  }
+    public String getPrenom() {
+        return prenom;
+    }
 
-  /**
-   * Get the value of nomContact
-   * @return the value of nomContact
-   */
-  private String getNomContact () {
-    return nomContact;
-  }
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
 
-  /**
-   * Set the value of prenom
-   * @param newVar the new value of prenom
-   */
-  private void setPrenom (String newVar) {
-    prenom = newVar;
-  }
+    public String getTel() {
+        return tel;
+    }
 
-  /**
-   * Get the value of prenom
-   * @return the value of prenom
-   */
-  private String getPrenom () {
-    return prenom;
-  }
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
 
-  /**
-   * Set the value of tel
-   * @param newVar the new value of tel
-   */
-  private void setTel (String newVar) {
-    tel = newVar;
-  }
+    public String getEmail() {
+        return email;
+    }
 
-  /**
-   * Get the value of tel
-   * @return the value of tel
-   */
-  private String getTel () {
-    return tel;
-  }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-  /**
-   * Set the value of email
-   * @param newVar the new value of email
-   */
-  private void setEmail (String newVar) {
-    email = newVar;
-  }
+    public Adresse getAdresse() {
+        return adresse;
+    }
 
-  /**
-   * Get the value of email
-   * @return the value of email
-   */
-  private String getEmail () {
-    return email;
-  }
-
-  /**
-   * Set the value of adresse
-   * @param newVar the new value of adresse
-   */
-  private void setAdresse (Adresse newVar) {
-    adresse = newVar;
-  }
-
-  /**
-   * Get the value of adresse
-   * @return the value of adresse
-   */
-  private Adresse getAdresse () {
-    return adresse;
-  }
-
-  //
-  // Other methods
-  //
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
 
     @Override
     public String toString() {

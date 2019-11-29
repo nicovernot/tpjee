@@ -14,39 +14,20 @@ public class EtatFacture extends GenericEntity{
 
   private String etat;
 
-  //
-  // Constructors
-  //
-  public EtatFacture () { };
+    public EtatFacture() {
+    }
 
-  //
-  // Methods
-  //
+    public EtatFacture(String etat) {
+        this.etat = etat;
+    }
 
+    public String getEtat() {
+        return etat;
+    }
 
-  //
-  // Accessor methods
-  //
-
-  /**
-   * Set the value of etat
-   * @param newVar the new value of etat
-   */
-  private void setEtat (String newVar) {
-    etat = newVar;
-  }
-
-  /**
-   * Get the value of etat
-   * @return the value of etat
-   */
-  private String getEtat () {
-    return etat;
-  }
-
-  //
-  // Other methods
-  //
+    public void setEtat(String etat) {
+        this.etat = etat;
+    }
 
     @Override
     public String toString() {

@@ -36,6 +36,7 @@
             <p:column filterBy="#{j.nom}" headerText="resource">
                 <f:facet name="filter">
                     <p:selectOneMenu onchange="PF('tableresources').filter()" styleClass="custom-filter">
+
                         <f:selectItems value="#{editerresource.resources}" var="r" itemValue="#{r.nom}"/>
                     </p:selectOneMenu>
                 </f:facet>

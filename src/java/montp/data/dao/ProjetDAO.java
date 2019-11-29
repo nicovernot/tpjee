@@ -29,8 +29,41 @@ public class ProjetDAO extends GenericDAO<Projet> {
             .getResultList();
     }
 
+    public List<Projet> get(int satrt,int limit, String nom){
+        return  em.createQuery("SELECT j from Projet j WHERE j.nom=:nom ")
+            .setParameter("nom",nom)
+            .getResultList();
+    }
+
+    public List<Projet> get(int start, int limit) {
+        return em.createQuery("SELECT j FROM Projet j ORDER BY j.nom")
+            .setFirstResult(start)
+            .setMaxResults(limit)
+            .getResultList();
+    }
+
+
     public int getCount() {
         return ((Long)em.createQuery("SELECT COUNT(e) FROM Projet e")
+            .getSingleResult()).intValue();
+    }
+    public int getCountByNom(String nom ){
+        System.out.print(nom);
+        return ((Long) em.createQuery("SELECT COUNT(j) from Projet  j WHERE j.nom=:nom")
+            .setParameter("nom",nom)
+            .getSingleResult()).intValue();
+    }
+    public int getCountByClient(String nom ){
+        System.out.print(nom);
+        return ((Long) em.createQuery("SELECT COUNT(j) from Projet  j WHERE j.client.nom=:nom")
+            .setParameter("nom",nom)
+            .getSingleResult()).intValue();
+    }
+
+    public int getCountByStatut(String nom ){
+        System.out.print(nom);
+        return ((Long) em.createQuery("SELECT COUNT(j) from Projet  j WHERE j.statuProjet.type=:nom")
+            .setParameter("nom",nom)
             .getSingleResult()).intValue();
     }
 

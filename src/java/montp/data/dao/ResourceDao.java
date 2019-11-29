@@ -24,10 +24,10 @@ public class ResourceDao extends GenericDAO<Resource> {
     public ResourceDao(){super(Resource.class);}
     public List<Resource> get(int start, int limit, boolean isactif) {
         return em.createQuery("SELECT j FROM Resource j ORDER BY j.nom, j.capacite")
-
             .setFirstResult(start)
             .setMaxResults(limit)
             .getResultList();
+
     }
 
     public List<Resource> get(int start, int limit) {
@@ -53,10 +53,10 @@ public class ResourceDao extends GenericDAO<Resource> {
             .getSingleResult()).intValue();
     }
     public int getCount(String nom ){
-        System.out.print(nom);
-        return (int) em.createQuery("SELECT j from Resource  j WHERE j.nom=:nom")
+
+        return ((Long) em.createQuery("SELECT COUNT(j) from Resource  j WHERE j.nom=:nom")
             .setParameter("nom",nom)
-            .getSingleResult();
+            .getSingleResult()).intValue();
     }
 
     @Transactional

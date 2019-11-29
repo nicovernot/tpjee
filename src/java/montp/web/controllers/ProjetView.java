@@ -4,6 +4,7 @@ import montp.data.dao.ProjetDAO;
 import montp.data.model.Projet;
 import montp.data.model.Projet;
 import montp.locale.Messages;
+import montp.services.ProjetPaginator;
 import montp.web.FacesTools;
 
 import javax.annotation.PostConstruct;
@@ -12,12 +13,13 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.TransactionalException;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 @ViewScoped
 @Named
-public class ProjetView {
+public class ProjetView implements Serializable {
 
 
     @Inject
@@ -25,6 +27,8 @@ public class ProjetView {
     private List<Projet> rst;
     private Messages messages;
     private Projet projet;
+    @Inject
+    ProjetPaginator projetPaginator;
     @PostConstruct
     public void init() {
         rst = res.getAll();
@@ -96,5 +100,13 @@ public class ProjetView {
                 "Impossible de metre à jour la Projet %s car il fait partie il y a des resources de ce type",
                 projet);
         }
+    }
+
+    public ProjetPaginator getProjetPaginator() {
+        return projetPaginator;
+    }
+
+    public void setProjetPaginator(ProjetPaginator projetPaginator) {
+        this.projetPaginator = projetPaginator;
     }
 }

@@ -4,6 +4,7 @@ import montp.data.dao.ClientDAO;
 import montp.data.model.Client;
 import montp.data.model.Client;
 import montp.locale.Messages;
+import montp.services.ClientPaginateur;
 import montp.web.FacesTools;
 
 import javax.annotation.PostConstruct;
@@ -12,16 +13,19 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.TransactionalException;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 @ViewScoped
 @Named
-public class ClientView {
+public class ClientView implements Serializable {
 
     @Inject
     private ClientDAO res;
     private List<Client> rst;
+    @Inject
+    ClientPaginateur clientPaginateur;
     private Messages messages;
     private  Client client;
     @PostConstruct
@@ -31,10 +35,6 @@ public class ClientView {
     public Collection<Client> getRestyp() {
         return res.getAll();
     }
-
-    // public String Mes(String cle) {
-    //    return messages.get(cle);
-    // }
 
 
     public Messages getMessages() {
@@ -96,4 +96,11 @@ public class ClientView {
         }
     }
 
+    public ClientPaginateur getClientPaginateur() {
+        return clientPaginateur;
+    }
+
+    public void setClientPaginateur(ClientPaginateur clientPaginateur) {
+        this.clientPaginateur = clientPaginateur;
+    }
 }

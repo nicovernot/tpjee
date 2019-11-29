@@ -27,98 +27,58 @@ public class Projet extends GenericEntity {
   //
   public Projet () { };
 
-  //
+    public Projet(String nom, String prenom, Utilisateur utilisateur, StatuProjet statuProjet, Client client) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.utilisateur = utilisateur;
+        this.statuProjet = statuProjet;
+        this.client = client;
+    }
+
+    //
   // Methods
   //
 
 
-  //
-  // Accessor methods
-  //
+    public String getNom() {
+        return nom;
+    }
 
-  /**
-   * Set the value of nom
-   * @param newVar the new value of nom
-   */
-  private void setNom (String newVar) {
-    nom = newVar;
-  }
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-  /**
-   * Get the value of nom
-   * @return the value of nom
-   */
-  private String getNom () {
-    return nom;
-  }
+    public String getPrenom() {
+        return prenom;
+    }
 
-  /**
-   * Set the value of prenom
-   * @param newVar the new value of prenom
-   */
-  private void setPrenom (String newVar) {
-    prenom = newVar;
-  }
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
 
-  /**
-   * Get the value of prenom
-   * @return the value of prenom
-   */
-  private String getPrenom () {
-    return prenom;
-  }
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
 
-  /**
-   * Set the value of utilisateur
-   * @param newVar the new value of utilisateur
-   */
-  private void setUtilisateur (Utilisateur newVar) {
-    utilisateur = newVar;
-  }
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
 
-  /**
-   * Get the value of utilisateur
-   * @return the value of utilisateur
-   */
-  private Utilisateur getUtilisateur () {
-    return utilisateur;
-  }
+    public StatuProjet getStatuProjet() {
+        return statuProjet;
+    }
 
-  /**
-   * Set the value of statuProjet
-   * @param newVar the new value of statuProjet
-   */
-  private void setStatuProjet (StatuProjet newVar) {
-    statuProjet = newVar;
-  }
+    public void setStatuProjet(StatuProjet statuProjet) {
+        this.statuProjet = statuProjet;
+    }
 
-  /**
-   * Get the value of statuProjet
-   * @return the value of statuProjet
-   */
-  private StatuProjet getStatuProjet () {
-    return statuProjet;
-  }
+    public Client getClient() {
+        return client;
+    }
 
-  /**
-   * Set the value of client
-   * @param newVar the new value of client
-   */
-  private void setClient (Client newVar) {
-    client = newVar;
-  }
-
-  /**
-   * Get the value of client
-   * @return the value of client
-   */
-  private Client getClient () {
-    return client;
-  }
-
-  //
-  // Other methods
-  //
+    public void setClient(Client client) {
+        this.client = client;
+    }
 
     @Override
     public String toString() {

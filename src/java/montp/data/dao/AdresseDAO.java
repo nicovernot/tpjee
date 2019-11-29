@@ -34,6 +34,12 @@ public class AdresseDAO extends GenericDAO<Adresse> {
             .getSingleResult()).intValue();
     }
 
+    public Adresse getAdresse(String ville){
+        return ((Adresse) em.createQuery("SELECT e FROM Adresse e where e.ville=:ville")
+            .setParameter("ville",ville )
+            .getSingleResult());
+    }
+
     @Transactional
     public void insert(Adresse res) {
         em.persist(res);
