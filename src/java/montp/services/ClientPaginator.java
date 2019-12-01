@@ -6,13 +6,14 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-@ApplicationScoped
-public class ClientPaginateur extends LazyDataModel<Client> implements Serializable {
+@ViewScoped
+public class ClientPaginator extends LazyDataModel<Client> implements Serializable {
 
     @Inject
     private ClientDAO clientDAO;

@@ -1,12 +1,13 @@
 package montp.web.controllers;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import montp.data.dao.AdresseDAO;
 import montp.data.dao.ClientDAO;
-import montp.data.model.Client;
+import montp.data.model.Adresse;
 import montp.data.model.Client;
 import montp.locale.Messages;
-import montp.services.ClientPaginateur;
+import montp.services.ClientPaginator;
 import montp.web.FacesTools;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -14,7 +15,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.TransactionalException;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 
 @ViewScoped
@@ -25,15 +25,17 @@ public class ClientView implements Serializable {
     private ClientDAO res;
     private List<Client> rst;
     @Inject
-    ClientPaginateur clientPaginateur;
+    ClientPaginator clientPaginator;
     private Messages messages;
     private  Client client;
+    private List<Client> clientList;
+    @Inject
+    private AdresseDAO adresseDAO;
+    private Adresse adresse;
     @PostConstruct
     public void init() {
         rst = res.getAll();
-    }
-    public Collection<Client> getRestyp() {
-        return res.getAll();
+        adresse =  new Adresse();
     }
 
 
@@ -72,6 +74,24 @@ public class ClientView implements Serializable {
         }
     }
 
+    public void saveAdresse() {
+        if (adresse.getId() == null) {
+
+            adresseDAO.insert(adresse);
+            client.setAdresse(adresse);
+            res.update(client);
+            FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
+                "Adresse créé");
+        } else {
+            adresseDAO.update(adresse);
+            FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
+                "Modifications enregistrées");
+        }
+    }
+    public Boolean isEmptyAdresse(Client client){
+        return res.isEmptyAdresse(client);
+    }
+
     public Client getClient(){
         return client;
     }
@@ -96,11 +116,27 @@ public class ClientView implements Serializable {
         }
     }
 
-    public ClientPaginateur getClientPaginateur() {
-        return clientPaginateur;
+    public ClientPaginator getClientPaginator() {
+        return clientPaginator;
     }
 
-    public void setClientPaginateur(ClientPaginateur clientPaginateur) {
-        this.clientPaginateur = clientPaginateur;
+    public void setClientPaginator(ClientPaginator clientPaginator) {
+        this.clientPaginator = clientPaginator;
+    }
+
+    public List<Client> getClientList() {
+        return clientList;
+    }
+
+    public void setClientList(List<Client> clientList) {
+        this.clientList = clientList;
+    }
+
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
     }
 }

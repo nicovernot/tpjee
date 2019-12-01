@@ -1,0 +1,61 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui = "http://java.sun.com/jsf/facelets">
+
+<body>
+<ui:composition>
+<p:dialog widgetVar="dialogAjouterresource"
+          id='dialogAjouterresource'
+          header="#{clientView.client.id == null ? 'Nouveau Client' : 'Modification de ' += clientView.client}"
+          modal="true"
+          closeOnEscape="true">
+    <h:form id="formAjouterresource">
+        <h:panelGrid columns="2" cellpadding="5">
+            <p:outputLabel for="mail" value="Email:"/>
+            <p:inputText id="mail"
+                         size="50"
+                         value="#{clientView.client.email}"
+                         required="true"
+                         requiredMessage="Le nom est obligatoire"/>
+            <p:outputLabel for="nom" value="Nom:"/>
+            <p:inputText id="nom"
+                         size="30"
+                         value="#{clientView.client.nom}"
+                         required="true"
+                         requiredMessage="Le nom est obligatoire"/>
+            <p:outputLabel for="prenom" value="Prenom:"/>
+            <p:inputText id="prenom"
+                         size='30'
+                         value='#{clientView.client.prenom}'
+                         required="true"
+                         requiredMessage="Le prenom est obligatoire"/>
+
+            <p:outputLabel for="contact" value="Contact:"/>
+            <p:inputText id="contact"
+                         size='30'
+                         value='#{clientView.client.nomContact}'
+                         required="true"
+                         requiredMessage="Le contact est obligatoire"/>
+            <p:outputLabel for="tel" value="Telephone:"/>
+            <p:inputText id="tel"
+                         size='30'
+                         value='#{clientView.client.tel}'
+                         required="true"
+                         requiredMessage="Le contact est obligatoire"/>
+            <p:spacer/>
+
+        </h:panelGrid>
+        <p:commandButton value="#{clientView.client.id == null ? 'Ajouter' : 'Enregistrer'}"
+                         action="#{clientView.save}"
+                         oncomplete="if (!args.validationFailed) PF('dialogAjouterresource').hide()"
+                         update="@form,formResources:messages,formResources:tableresources"/>
+    </h:form>
+</p:dialog>
+</ui:composition>
+</body>
+</html>

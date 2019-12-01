@@ -8,6 +8,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -41,6 +42,18 @@ public class ClientDAO extends GenericDAO<Client> {
         return  em.createQuery("SELECT j from Client j WHERE j.nom=:nom ")
             .setParameter("nom",nom)
             .getResultList();
+    }
+
+    public Boolean isEmptyAdresse(Client client) {
+        try {
+            return ((Long) em.createQuery(
+                "SELECT COUNT(e.adresse) FROM Client e WHERE e.id= :j")
+                .setParameter("j", client.getId())
+                .getSingleResult()) == 0;
+
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public int getCountByNom(String nom ){

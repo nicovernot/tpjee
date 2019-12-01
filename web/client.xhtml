@@ -22,9 +22,6 @@
                                      icon="fa fa-check"/>
                 </p:confirmDialog>
 
-
-
-
                 <p:dataTable id="tableresources"
                              widgetVar="tableresources"
                              var="j"
@@ -32,12 +29,12 @@
                              paginator="true" rows="5"
                              paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
 
-                             value="#{clientView.restyp}">
-                    <p:column filterBy="#{j.nom}" headerText="resource">
+                             value="#{clientView.clientPaginator}">
+                    <p:column filterBy="#{j.nom}" headerText="nom">
                         <f:facet name="filter">
                             <p:selectOneMenu onchange="PF('tableresources').filter()" styleClass="custom-filter">
 
-                                <f:selectItems value="#{clientView.restyp}" var="r" itemValue="#{r.nom}"/>
+                                <f:selectItems value="#{clientView.clients}" var="r" itemValue="#{r.nom}"/>
                             </p:selectOneMenu>
                         </f:facet>
                         #{j.nom}
@@ -52,46 +49,49 @@
                         #{j.tel}
                     </p:column>
                     <p:column headerText="Nom Contact">
-                        #{j.nomcontact}
+                        #{j.nomContact}
                     </p:column>
                     <p:column headerText="Action">
-                     action
-
+                        <p:commandButton icon="fa fa-trash"
+                                         title="Supprimer"
+                                         actionListener="#{clientView.delete(j)}"
+                                         update="tableresources"
+                                         process="@this">
+                            <p:confirm header="Supprimer un Client"
+                                       message="Supprimer #{rt} ?"
+                                       icon="fa fa-question-circle"/>
+                        </p:commandButton>
+                        <p:commandButton icon="fa fa-edit"
+                                         title="Modifier"
+                                         actionListener="#{clientView.setClient(j)}"
+                                         oncomplete="PF('dialogAjouterresource').show()"
+                                         update="dialogAjouterresource"/>
+                        <p:commandButton icon="fa fa-building"
+                                         title="Ajouter adresse"
+                                         rendered="#{clientView.isEmptyAdresse(j)}"
+                                         actionListener="#{clientView.setClient(j)}"
+                                         value="Ajouter Adresse"
+                                         oncomplete="PF('dialogAjouterAdresse').show()"
+                                         update="dialogAjouterresource"/>
+                        <p:commandButton icon="fa fa-building"
+                                         value="Editer Adresse"
+                                         styleClass="GreenButton"
+                                         title="Editer adresse"
+                                         rendered="#{!clientView.isEmptyAdresse(j)}"
+                                         actionListener="#{clientView.setAdresse(j.adresse)}"
+                                         oncomplete="PF('dialogAjouterAdresse').show()"
+                                         update="dialogAjouterAdresse"/>
                     </p:column>
                 </p:dataTable>
 
             </h:form>
         </p:panel>
-        <p:dialog widgetVar="dialogAjouterresource"
-                  id='dialogAjouterresource'
-                  header="#{clientView.client.id == null ? 'Nouvelle resource' : 'Modification de ' += clientView.client}"
-                  modal="true"
-                  closeOnEscape="true">
-            <h:form id="formAjouterresource">
-                <h:panelGrid columns="2" cellpadding="5">
-                    <p:outputLabel for="nom" value="Nom:"/>
-                    <p:inputText id="nom"
-                                 size="30"
-                                 value="#{clientView.client.nom}"
-                                 required="true"
-                                 requiredMessage="Le nom est obligatoire"/>
-                    <p:outputLabel for="capacite" value="Prenom:"/>
-                    <p:inputText id="capacite"
-                                 size='30'
-                                 value='#{clientView.client.prenom}'
-                                 required="true"
-                                 requiredMessage="La capacité est obligatoire"/>
-
-
-                    <p:spacer/>
-
-                </h:panelGrid>
-                <p:commandButton value="#{clientView.client.id == null ? 'Ajouter' : 'Enregistrer'}"
-                                 action="#{clientView.save}"
-                                 oncomplete="if (!args.validationFailed) PF('dialogAjouterresource').hide()"
-                                 update="@form,formResources:messages,formResources:tableresources"/>
-            </h:form>
-        </p:dialog>
+        <ui:insert name = "clientform" >
+  <ui:include src="clientForm.xhtml"></ui:include>
+        </ui:insert>
+        <ui:insert name = "adresseform" >
+            <ui:include src="AdresseForm.xhtml"></ui:include>
+        </ui:insert>
     </ui:define>
 
 </ui:composition>
