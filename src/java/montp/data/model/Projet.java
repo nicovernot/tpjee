@@ -14,7 +14,7 @@ public class Projet extends GenericEntity {
   //
 
   private String nom;
-  private String prenom;
+
   @ManyToOne
   private Utilisateur utilisateur;
   @ManyToOne
@@ -29,7 +29,7 @@ public class Projet extends GenericEntity {
 
     public Projet(String nom, String prenom, Utilisateur utilisateur, StatuProjet statuProjet, Client client) {
         this.nom = nom;
-        this.prenom = prenom;
+
         this.utilisateur = utilisateur;
         this.statuProjet = statuProjet;
         this.client = client;
@@ -48,13 +48,6 @@ public class Projet extends GenericEntity {
         this.nom = nom;
     }
 
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
 
     public Utilisateur getUtilisateur() {
         return utilisateur;
@@ -82,9 +75,6 @@ public class Projet extends GenericEntity {
 
     @Override
     public String toString() {
-        return "Projet{" +
-            "nom='" + nom + '\'' +
-            ", prenom='" + prenom + '\'' +
-            '}';
+        return  nom;
     }
 }

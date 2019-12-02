@@ -1,8 +1,12 @@
 package montp.web.controllers;
 
+import montp.data.dao.ClientDAO;
 import montp.data.dao.ProjetDAO;
+import montp.data.dao.StatuProjetDAO;
+import montp.data.dao.UtilisateurDAO;
+import montp.data.model.*;
 import montp.data.model.Projet;
-import montp.data.model.Projet;
+import montp.data.model.security.User;
 import montp.locale.Messages;
 import montp.services.ProjetPaginator;
 import montp.web.FacesTools;
@@ -28,7 +32,16 @@ public class ProjetView implements Serializable {
     private Messages messages;
     private Projet projet;
     @Inject
+    ClientDAO clientDAO;
+    @Inject
+    StatuProjetDAO statuProjetDAO;
+    @Inject
+    UtilisateurDAO utilisateurDAO;
+    @Inject
     ProjetPaginator projetPaginator;
+    private Client client;
+    private Utilisateur utilisateur;
+    private StatuProjet statuProjet;
     @PostConstruct
     public void init() {
         rst = res.getAll();
@@ -64,6 +77,18 @@ public class ProjetView implements Serializable {
     }
     public void  create(){
         projet = new Projet();
+    }
+
+    public  void creatUser(){
+        utilisateur = new Utilisateur();
+    }
+
+    public  void createClient(){
+        client = new Client();
+    }
+
+    public  void  createStatus(){
+        statuProjet = new StatuProjet();
     }
 
     public void save() {
@@ -108,5 +133,29 @@ public class ProjetView implements Serializable {
 
     public void setProjetPaginator(ProjetPaginator projetPaginator) {
         this.projetPaginator = projetPaginator;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public StatuProjet getStatuProjet() {
+        return statuProjet;
+    }
+
+    public void setStatuProjet(StatuProjet statuProjet) {
+        this.statuProjet = statuProjet;
     }
 }

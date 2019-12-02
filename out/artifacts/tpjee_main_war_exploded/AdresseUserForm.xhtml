@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns = "http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui = "http://java.sun.com/jsf/facelets">
+
+<body>
+<ui:composition>
+    <p:dialog widgetVar="dialogAjouterAdresse"
+              id='dialogAjouterAdresse'
+              header="#{utilisateurView.adresse.id == null ? 'Nouvelle Adresse Client' : 'Modification de ' += utilisateurView.adresse}"
+              modal="true"
+              closeOnEscape="true">
+        <h:form id="formAjouterAdresse">
+            <h:panelGrid columns="2" cellpadding="5">
+                <p:outputLabel for="numero_rue" value="N° :"/>
+                <p:inputNumber id="numero_rue"
+                               size="10"
+                               value="#{utilisateurView.adresse.numeroRue}"
+                               required="true"
+                               requiredMessage="Le numero de rue est obligatoire"/>
+                <p:outputLabel for="rue" value="rue:"/>
+                <p:inputText id="rue"
+                             size="30"
+                             value="#{utilisateurView.adresse.rue}"
+                             required="true"
+                             requiredMessage="La rue est obligatoire"/>
+                <p:outputLabel for="codepostal" value="codepostal:"/>
+                <p:inputText id="codepostal"
+                             size='30'
+                             value='#{utilisateurView.adresse.codePostal}'
+                             required="true"
+                             requiredMessage="Le code postal est obligatoire"/>
+
+                <p:outputLabel for="ville" value="Ville:"/>
+                <p:inputText id="ville"
+                             size='30'
+                             value='#{utilisateurView.adresse.ville}'
+                             required="true"
+                             requiredMessage="La ville est obligatoire"/>
+                <p:spacer/>
+
+            </h:panelGrid>
+            <p:commandButton value="#{utilisateurView.adresse.id == null ? 'Ajouter' : 'Enregistrer'}"
+                             action="#{utilisateurView.saveAdresse}"
+                             update="@form,formResources:messages"
+                             oncomplete="if (!args.validationFailed) PF('dialogAjouterAdresse').hide()"/>
+        </h:form>
+    </p:dialog>
+</ui:composition>
+</body>
+</html>

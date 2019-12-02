@@ -11,24 +11,18 @@
 <ui:composition>
 <p:dialog widgetVar="dialogAjouterresource"
           id='dialogAjouterresource'
-          header="#{clientView.client.id == null ? 'Nouveau Client' : 'Modification de ' += clientView.client}"
+          header="#{projetView.client.id == null ? 'Nouveau Client' : 'Modification de ' += projetView.client}"
           modal="true"
           closeOnEscape="true">
     <h:form id="formAjouterresource">
         <h:panelGrid columns="2" cellpadding="5">
-            <p:outputLabel for="mail" value="Email:"/>
-            <p:inputText id="mail"
-                         size="50"
-                         value="#{clientView.client.email}"
-                         required="true"
-                         requiredMessage="Le nom est obligatoire"/>
             <p:outputLabel for="nom" value="Nom:"/>
             <p:inputText id="nom"
                          size="30"
-                         value="#{clientView.client.nom}"
+                         value="#{projetView.projet.nom}"
                          required="true"
                          requiredMessage="Le nom est obligatoire"/>
-            <p:outputLabel for="prenom" value="Prenom:"/>
+            <p:outputLabel for="client" value="client:"/>
             <p:inputText id="prenom"
                          size='30'
                          value='#{clientView.client.prenom}'

@@ -35,6 +35,25 @@ public class ProjetDAO extends GenericDAO<Projet> {
             .getResultList();
     }
 
+    public List<Projet> getClient(int satrt,int limit, Integer cl_id){
+        return  em.createQuery("SELECT j from Projet j WHERE j.client.id=:nom ")
+            .setParameter("nom",cl_id)
+            .getResultList();
+    }
+
+    public List<Projet> getStatus(int satrt,int limit, Integer cl_id){
+        return  em.createQuery("SELECT j from Projet j WHERE j.statuProjet.id=:nom ")
+            .setParameter("nom",cl_id)
+            .getResultList();
+    }
+
+    public List<Projet> getUser(int satrt,int limit, Integer cl_id){
+        return  em.createQuery("SELECT j from Projet j WHERE j.utilisateur.id=:nom ")
+            .setParameter("nom",cl_id)
+            .getResultList();
+    }
+
+
     public List<Projet> get(int start, int limit) {
         return em.createQuery("SELECT j FROM Projet j ORDER BY j.nom")
             .setFirstResult(start)
@@ -53,6 +72,8 @@ public class ProjetDAO extends GenericDAO<Projet> {
             .setParameter("nom",nom)
             .getSingleResult()).intValue();
     }
+
+
     public int getCountByClient(String nom ){
         System.out.print(nom);
         return ((Long) em.createQuery("SELECT COUNT(j) from Projet  j WHERE j.client.nom=:nom")
