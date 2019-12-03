@@ -1,7 +1,10 @@
 package montp.web.controllers;
 
+import montp.data.dao.EtatFactureDAO;
 import montp.data.dao.FactureDAO;
-import montp.data.model.Facture;
+import montp.data.dao.ProjetDAO;
+import montp.data.dao.TypePaiementDAO;
+import montp.data.model.*;
 import montp.data.model.Facture;
 import montp.locale.Messages;
 import montp.services.FacturePaginator;
@@ -27,9 +30,27 @@ public class FactureView implements Serializable {
     private Facture facture;
     @Inject
     private FacturePaginator facturePaginator;
+    @Inject
+    private TypePaiementDAO typePaiementDAO;
+    private TypePaiement typePaiement;
+    @Inject
+    private EtatFactureDAO etatFactureDAO;
+    private EtatFacture etatFacture;
+    @Inject
+    private ProjetDAO projetDAO;
+    private Projet projet;
+    private List<Projet> projetList;
+    private List<TypePaiement> typePaiementList;
+    private List<EtatFacture> etatFactureList;
+
     @PostConstruct
     public void init() {
+
         rst = res.getAll();
+        projetList = projetDAO.getAll();
+        typePaiementList = typePaiementDAO.getAll();
+        etatFactureList = etatFactureDAO.getAll();
+
     }
     public Collection<Facture> getRestyp() {
         return res.getAll();
@@ -53,7 +74,11 @@ public class FactureView implements Serializable {
         }
     }
     public void  create(){
+
         facture = new Facture();
+        etatFacture =new EtatFacture();
+        typePaiement =new TypePaiement();
+        projet = new Projet();
     }
 
     public void save() {
@@ -98,5 +123,53 @@ public class FactureView implements Serializable {
 
     public void setFacturePaginator(FacturePaginator facturePaginator) {
         this.facturePaginator = facturePaginator;
+    }
+
+    public TypePaiement getTypePaiement() {
+        return typePaiement;
+    }
+
+    public void setTypePaiement(TypePaiement typePaiement) {
+        this.typePaiement = typePaiement;
+    }
+
+    public EtatFacture getEtatFacture() {
+        return etatFacture;
+    }
+
+    public void setEtatFacture(EtatFacture etatFacture) {
+        this.etatFacture = etatFacture;
+    }
+
+    public Projet getProjet() {
+        return projet;
+    }
+
+    public void setProjet(Projet projet) {
+        this.projet = projet;
+    }
+
+    public List<Projet> getProjetList() {
+        return projetList;
+    }
+
+    public void setProjetList(List<Projet> projetList) {
+        this.projetList = projetList;
+    }
+
+    public List<TypePaiement> getTypePaiementList() {
+        return typePaiementList;
+    }
+
+    public void setTypePaiementList(List<TypePaiement> typePaiementList) {
+        this.typePaiementList = typePaiementList;
+    }
+
+    public List<EtatFacture> getEtatFactureList() {
+        return etatFactureList;
+    }
+
+    public void setEtatFactureList(List<EtatFacture> etatFactureList) {
+        this.etatFactureList = etatFactureList;
     }
 }

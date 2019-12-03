@@ -1,8 +1,11 @@
 package montp.data.dao;
 
 import montp.data.model.Facture;
+import montp.data.model.Utilisateur;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,6 +18,10 @@ public class FactureDAO extends GenericDAO<Facture>{
     private EntityManager em;
     @Inject
     private Event<Facture> FactureEvent;
+    @Inject
+    UtilisateurDAO utilisateurDAO;
+    Utilisateur utilisateur;
+
 
     public Facture get(int id) {
         return em.find(Facture.class, id);
@@ -22,19 +29,36 @@ public class FactureDAO extends GenericDAO<Facture>{
 
     public FactureDAO() { super(Facture.class);}
 
+    public Utilisateur getUtilisateur() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        utilisateur = utilisateurDAO.getByName(facesContext.getExternalContext().getRemoteUser());
+        System.out.print("tpr" + utilisateur.getNom());
+        return utilisateur;
+    }
+
     public List<Facture> getAll() {
-        return em.createQuery("SELECT e FROM Facture e")
+        return em.createQuery("SELECT e FROM Facture e where e.projet.utilisateur=:user")
+            .setParameter("user",utilisateur)
             .getResultList();
     }
 
     public List<Facture> get(int satrt,int limit, String nom){
-        return  em.createQuery("SELECT j from Facture j WHERE j.projet.nom=:nom ")
+        return  em.createQuery("SELECT j from Facture j WHERE j.projet.nom=:nom and j.projet.utilisateur=:user ")
             .setParameter("nom",nom)
+            .setParameter("user",utilisateur)
+            .getResultList();
+    }
+
+    public List<Facture> getbyEtat(int satrt,int limit, String nom){
+        return  em.createQuery("SELECT j from Facture j WHERE j.etatFacture.etat=:nom and j.projet.utilisateur=:user ")
+            .setParameter("nom",nom)
+            .setParameter("user",utilisateur)
             .getResultList();
     }
 
     public List<Facture> get(int start, int limit) {
-        return em.createQuery("SELECT j FROM Facture j ORDER BY j.etatFacture.etat")
+        return em.createQuery("SELECT j FROM Facture j where j.projet.utilisateur=:user ORDER BY j.etatFacture.etat")
+            .setParameter("user",utilisateur)
             .setFirstResult(start)
             .setMaxResults(limit)
             .getResultList();
@@ -43,14 +67,16 @@ public class FactureDAO extends GenericDAO<Facture>{
 
 
     public int getCount() {
-        return ((Long)em.createQuery("SELECT COUNT(e) FROM Facture e")
+        return ((Long)em.createQuery("SELECT COUNT(e) FROM Facture e where e.projet.utilisateur=:user")
+            .setParameter("user",utilisateur)
             .getSingleResult()).intValue();
     }
 
     public int getCountByProjet(String nom ){
         System.out.print(nom);
-        return ((Long) em.createQuery("SELECT COUNT(j) from Facture  j WHERE j.projet.nom=:nom")
+        return ((Long) em.createQuery("SELECT COUNT(j) from Facture  j WHERE j.projet.nom=:nom and j.projet.utilisateur=:user")
             .setParameter("nom",nom)
+            .setParameter("user",utilisateur)
             .getSingleResult()).intValue();
     }
 

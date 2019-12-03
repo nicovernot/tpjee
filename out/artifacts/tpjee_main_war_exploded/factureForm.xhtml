@@ -1,0 +1,49 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<body>
+<ui:composition>
+    <p:dialog widgetVar="dialogAjouterAdresse"
+              id='dialogAjouterAdresse'
+              header="#{factureView.facture.id == null ? 'Nouveau Projet' : 'Modification de ' += factureView.facture.projet.nom}"
+              modal="true"
+              closeOnEscape="true">
+        <h:form id="formAjouterAdresse">
+            <h:panelGrid columns="2" cellpadding="5">
+
+
+                <p:outputLabel for="advanced" value="Projet:"/>
+                <p:selectOneListbox id="advanced" value="#{factureView.facture}"  var="t" filter="true" filterMatchMode="contains">
+                    <f:selectItems value="#{factureView.projetList}" var="client" itemLabel="#{factureView.projet.nom}" itemValue="#{projet}" />
+                    <p:column>
+                        <h:outputText value="#{t.nom}" />
+                    </p:column>
+                </p:selectOneListbox>
+
+                <p:outputLabel for="statut" value="Statut:"/>
+                <p:selectOneListbox id="statut" value="#{factureView.facture}"  var="t" filter="true" filterMatchMode="contains">
+                    <f:selectItems value="#{factureView.typePaiementList}" var="statuProjet" itemLabel="#{factureView.typePaiement.typePaiement}" itemValue="#{typePaiement}" />
+                    <p:column>
+                        <h:outputText value="#{t.typePaiement}" />
+                    </p:column>
+                </p:selectOneListbox>
+
+
+                <p:spacer/>
+
+            </h:panelGrid>
+            <p:commandButton value="#{factureView.facture.id == null ? 'Ajouter' : 'Enregistrer'}"
+                             action="#{factureView.save}"
+                             update="@form,formResources:messages,formResources:tableresources"
+                             oncomplete="if (!args.validationFailed) PF('dialogAjouterAdresse').hide()"/>
+        </h:form>
+    </p:dialog>
+</ui:composition>
+</body>
+</html>

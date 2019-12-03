@@ -15,30 +15,8 @@
 
             <p:menubar rendered="#{request.isUserInRole('USER')}">
                 <p:menuitem value="Accueil" icon="pi pi-home" outcome="index" />
-                <p:submenu label="reservations" icon="pi pi-file">
-                    <p:submenu label="Consulter" icon="pi pi-briefcase">
-                        <p:menuitem value="Liste reservations" outcome="reservations" />
-                    </p:submenu>
-                  </p:submenu>
 
-                <p:submenu label="Resources" icon="pi pi-pencil">
-                    <p:menuitem value="Liste resources" outcome="resources" icon="pi pi-angle-double-left" />
-                </p:submenu>
-
-                <p:submenu label="Type resources" icon="pi pi-question">
-                    <p:menuitem value="Type resources" outcome="typeresource" />
-
-                </p:submenu>
-
-                <p:submenu label="Actions" icon="pi pi-cog">
-                    <p:submenu label="Ajax" icon="pi pi-refresh">
-                        <p:menuitem value="Save" action="#{menuView.save}" icon="pi pi-save" update="messages"/>
-                        <p:menuitem value="Update" action="#{menuView.update}" icon="pi pi-refresh" update="messages"/>
-                    </p:submenu>
-                    <p:submenu label="Non-Ajax" icon="pi pi-clone">
-                        <p:menuitem value="Delete" action="#{menuView.delete}" icon="pi pi-times" update="messages" ajax="false"/>
-                    </p:submenu>
-                </p:submenu>
+                <p:menuitem value="Factures" outcome="facture" icon="pi pi-question" />
                 <p:menuitem value="Projets" outcome="projet" icon="pi pi-question" />
                 <p:menuitem value="Client" outcome="client" icon="pi pi-times" />
 

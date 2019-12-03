@@ -1,10 +1,7 @@
 package montp.data;
 
 import montp.data.dao.*;
-import montp.data.model.Person;
-import montp.data.model.Resource;
-import montp.data.model.ResourceType;
-import montp.data.model.StatuProjet;
+import montp.data.model.*;
 import montp.data.model.security.Group;
 import montp.data.model.security.User;
 import montp.services.ResourceTypeService;
@@ -48,10 +45,12 @@ public class Seeder {
     @Inject
     private StatuProjetDAO statuProjetDAO;
     private StatuProjet statuProjet;
-
-
-
-
+    @Inject
+    private EtatFactureDAO etatFactureDAO;
+    private EtatFacture etatFacture;
+    @Inject
+    private TypePaiementDAO typePaiementDAO;
+    private  TypePaiement typePaiement;
     @PostConstruct
     public void init() {
 System.out.print("seeder");
@@ -65,6 +64,25 @@ System.out.print("seeder");
            statuProjetDAO.insert(statuProjet);
        }
         }
+
+        String[] stafact = {"éditée", "envoyée", "payée"};
+        String[] typepaiments ={"chèque", "virement","paypal", "autre"};
+        if(etatFactureDAO.getCount()==0){
+            for (int r=0;r<stafact.length;r++){
+                etatFacture = new EtatFacture();
+                etatFacture.setEtat(stafact[r]);
+                etatFactureDAO.insert(etatFacture);
+            }
+        }
+
+        if(typePaiementDAO.getCount()==0){
+            for(int s=0;s<typepaiments.length;s++){
+                typePaiement = new TypePaiement();
+                typePaiement.setTypePaiement(typepaiments[s]);
+                typePaiementDAO.insert(typePaiement);
+            }
+        }
+
 
         if (userService.getGroup("USER") == null) {
             Group groupUser = new Group("USER");

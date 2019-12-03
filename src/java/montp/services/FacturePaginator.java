@@ -26,7 +26,7 @@ public class FacturePaginator extends LazyDataModel<Facture> implements Serializ
         } else {
             String nom = (String) filters.get("nom");
             setRowCount(factureDAO.getCountByProjet(nom));
-            return factureDAO.get(first, pageSize,nom);
+            return factureDAO.getbyEtat(first, pageSize,nom);
         }
     }
 
