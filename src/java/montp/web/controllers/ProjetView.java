@@ -6,13 +6,13 @@ import montp.data.dao.StatuProjetDAO;
 import montp.data.dao.UtilisateurDAO;
 import montp.data.model.*;
 import montp.data.model.Projet;
-import montp.data.model.security.User;
 import montp.locale.Messages;
 import montp.services.ProjetPaginator;
 import montp.web.FacesTools;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,18 +42,24 @@ public class ProjetView implements Serializable {
     private Client client;
     private Utilisateur utilisateur;
     private StatuProjet statuProjet;
+    private List<Client> clientList;
+    private  List<StatuProjet> statuProjetList;
+
     @PostConstruct
     public void init() {
         rst = res.getAll();
+        clientList = clientDAO.getAll();
+        statuProjetList = statuProjetDAO.getAll();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        utilisateur = utilisateurDAO.getByName(facesContext.getExternalContext().getRemoteUser());
+        System.out.print("rr" + utilisateur.getNom());
+
     }
     public Collection<Projet> getRestyp() {
 
         return res.getAll();
     }
 
-    // public String Mes(String cle) {
-    //    return messages.get(cle);
-    // }
 
 
     public Messages getMessages() {
@@ -77,6 +83,8 @@ public class ProjetView implements Serializable {
     }
     public void  create(){
         projet = new Projet();
+        client = new Client();
+        statuProjet = new StatuProjet();
     }
 
     public  void creatUser(){
@@ -93,10 +101,15 @@ public class ProjetView implements Serializable {
 
     public void save() {
         if (projet.getId() == null) {
+            projet.setUtilisateur(utilisateur);
+            projet.setStatuProjet(statuProjet);
+            projet.setClient(client);
             res.insert(projet);
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "Projet créé");
         } else {
+            projet.setStatuProjet(statuProjet);
+            projet.setClient(client);
             res.update(projet);
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "Modifications enregistrées");
@@ -158,4 +171,22 @@ public class ProjetView implements Serializable {
     public void setStatuProjet(StatuProjet statuProjet) {
         this.statuProjet = statuProjet;
     }
+
+    public List<Client> getClientList() {
+        return clientList;
+    }
+
+    public void setClientList(List<Client> clientList) {
+        this.clientList = clientDAO.getAll();
+    }
+
+    public List<StatuProjet> getStatuProjetList() {
+        return statuProjetList;
+    }
+
+    public void setStatuProjetList(List<StatuProjet> statuProjetList) {
+        this.statuProjetList = statuProjetList;
+    }
+
+
 }

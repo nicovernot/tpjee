@@ -6,8 +6,7 @@
                 template="./layout.xhtml">
     <ui:define name="content">
 
-
-        <h1>Mon TP</h1>
+           <h1>Mon TP</h1>
         <p:panel id="basic" header="Basic" footer="Movie Details" style="margin-bottom:20px">
             <h:panelGrid columns="2" cellpadding="10">
                 <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
@@ -18,7 +17,7 @@
                 but given to ruthless violence whenever anything stands against the good of the family." />
             </h:panelGrid>
         </p:panel>
-
+<p:commandButton action="#{index.init}" id="init" value="init"/>
 
     </ui:define>
 

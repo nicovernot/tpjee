@@ -13,8 +13,8 @@
                                  value="Ajouter une resource"
                                  actionListener="#{projetView.create}"
                                  process="@this"
-                                 oncomplete="PF('dialogAjouterresource').show()"
-                                 update="dialogAjouterresource"/>
+                                 oncomplete="PF('dialogAjouterAdresse').show()"
+                                 update="dialogAjouterAdresse"/>
                 <p:confirmDialog global="true">
                     <p:commandButton value="Oui"
                                      type="button"
@@ -52,16 +52,18 @@
                         </p:commandButton>
                         <p:commandButton icon="fa fa-edit"
                                          title="Modifier"
-                                         actionListener="#{projetView.setClient(j)}"
-                                         oncomplete="PF('dialogAjouterresource').show()"
-                                         update="dialogAjouterresource"/>
+                                         actionListener="#{projetView.setProjet(j)}"
+                                         oncomplete="PF('dialogAjouterAdresse').show()"
+                                         update="dialogAjouterAdresse,"/>
 
                     </p:column>
                 </p:dataTable>
 
             </h:form>
         </p:panel>
-
+        <ui:insert name = "projetform" >
+            <ui:include src="projetForm.xhtml"></ui:include>
+        </ui:insert>
     </ui:define>
 
 </ui:composition>

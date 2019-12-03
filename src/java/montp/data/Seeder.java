@@ -4,6 +4,7 @@ import montp.data.dao.*;
 import montp.data.model.Person;
 import montp.data.model.Resource;
 import montp.data.model.ResourceType;
+import montp.data.model.StatuProjet;
 import montp.data.model.security.Group;
 import montp.data.model.security.User;
 import montp.services.ResourceTypeService;
@@ -44,12 +45,26 @@ public class Seeder {
     private Resource resource;
     @Inject
     PersonDAO personDAO;
+    @Inject
+    private StatuProjetDAO statuProjetDAO;
+    private StatuProjet statuProjet;
+
+
 
 
     @PostConstruct
     public void init() {
-System.out.print("hola");
-        String [] names = {"jean",  "piere",  "marie","tom","louis","monique","tina","louisa","jean1",  "piere1",  "marie1","tom1","mouis","monique","tina","louisa"} ;
+System.out.print("seeder");
+        String[] names = {"jean",  "piere",  "marie","tom","louis","monique","tina","louisa","jean1",  "piere1",  "marie1","tom1","mouis","monique","tina","louisa"} ;
+        String[] statusp = {"prospect", "devis", "envoyé", "devis","accepté", "démarré", "terminé", "annulé"};
+        if (statuProjetDAO.getCount()==0){
+       for (int i=0;i<statusp.length;i++){
+         System.out.print(statusp[i]);
+           statuProjet = new StatuProjet();
+           statuProjet.setType(statusp[i]);
+           statuProjetDAO.insert(statuProjet);
+       }
+        }
 
         if (userService.getGroup("USER") == null) {
             Group groupUser = new Group("USER");

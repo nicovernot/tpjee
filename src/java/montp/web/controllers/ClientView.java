@@ -3,13 +3,17 @@ package montp.web.controllers;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import montp.data.dao.AdresseDAO;
 import montp.data.dao.ClientDAO;
+import montp.data.dao.UtilisateurDAO;
 import montp.data.model.Adresse;
 import montp.data.model.Client;
+import montp.data.model.Utilisateur;
+import montp.data.model.security.User;
 import montp.locale.Messages;
 import montp.services.ClientPaginator;
 import montp.web.FacesTools;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -32,10 +36,17 @@ public class ClientView implements Serializable {
     @Inject
     private AdresseDAO adresseDAO;
     private Adresse adresse;
+    @Inject
+    private UtilisateurDAO utilisateurDAO;
+    private Utilisateur utilisateur;
+    private User user;
     @PostConstruct
     public void init() {
         rst = res.getAll();
         adresse =  new Adresse();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        utilisateur = utilisateurDAO.getByName(facesContext.getExternalContext().getRemoteUser());
+        System.out.print("rr" + utilisateur.getNom());
     }
 
 
@@ -64,6 +75,7 @@ public class ClientView implements Serializable {
 
     public void save() {
         if (client.getId() == null) {
+            client.setUtilisateur(utilisateur);
             res.insert(client);
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "Client créé");
@@ -139,4 +151,5 @@ public class ClientView implements Serializable {
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
     }
+
 }

@@ -27,6 +27,12 @@ public class UtilisateurDAO extends GenericDAO<Utilisateur> {
             .getResultList();
     }
 
+    public Utilisateur getByName(String name){
+        return (Utilisateur) em.createQuery("select e from  Utilisateur e where e.user.userName=:name")
+            .setParameter("name",name)
+            .getSingleResult();
+    }
+
     public int getCount() {
         return ((Long)em.createQuery("SELECT COUNT(e) FROM Utilisateur e")
             .getSingleResult()).intValue();

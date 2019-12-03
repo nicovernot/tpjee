@@ -2,10 +2,13 @@ package montp.data.dao;
 
 
 import montp.data.model.Client;
+import montp.data.model.Utilisateur;
 
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -19,28 +22,46 @@ public class ClientDAO extends GenericDAO<Client> {
     private EntityManager em;
     @Inject
     private Event<Client> ClientEvent;
-
+    @Inject
+    private
+    UtilisateurDAO utilisateurDAO;
+    private Utilisateur utilisateur;
     public Client get(int id) {
         return em.find(Client.class, id);
     }
 
     public ClientDAO() { super(Client.class);}
 
+    @PostConstruct
+    public void init(){
+        getUtilisateur();
+    }
+
+    public Utilisateur getUtilisateur() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        utilisateur = utilisateurDAO.getByName(facesContext.getExternalContext().getRemoteUser());
+        System.out.print("tpr" + utilisateur.getNom());
+        return utilisateur;
+    }
+
     public List<Client> getAll() {
-        return em.createQuery("SELECT e FROM Client e")
+        return em.createQuery("SELECT e FROM Client e where e.utilisateur=:user")
+            .setParameter("user",utilisateur)
             .getResultList();
     }
 
     public List<Client> get(int start, int limit) {
-        return em.createQuery("SELECT j FROM Client j ORDER BY j.nom, j.email")
+        return em.createQuery("SELECT j FROM Client j where  j.utilisateur=:user ORDER BY j.nom, j.email")
+            .setParameter("user",utilisateur)
             .setFirstResult(start)
             .setMaxResults(limit)
             .getResultList();
     }
 
     public List<Client> get(int satrt,int limit, String nom){
-        return  em.createQuery("SELECT j from Client j WHERE j.nom=:nom ")
+        return  em.createQuery("SELECT j from Client j WHERE j.nom=:nom and j.utilisateur=:user")
             .setParameter("nom",nom)
+            .setParameter("user",utilisateur)
             .getResultList();
     }
 
@@ -58,8 +79,9 @@ public class ClientDAO extends GenericDAO<Client> {
 
     public int getCountByNom(String nom ){
         System.out.print(nom);
-        return ((Long) em.createQuery("SELECT COUNT(j) from Client  j WHERE j.nom=:nom")
+        return ((Long) em.createQuery("SELECT COUNT(j) from Client  j WHERE j.nom=:nom and j.utilisateur=:user" )
             .setParameter("nom",nom)
+            .setParameter("user",utilisateur)
             .getSingleResult()).intValue();
     }
 

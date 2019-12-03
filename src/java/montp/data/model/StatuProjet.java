@@ -33,8 +33,6 @@ public class StatuProjet extends GenericEntity{
 
     @Override
     public String toString() {
-        return "StatuProjet{" +
-            "type='" + type + '\'' +
-            '}';
+        return type;
     }
 }

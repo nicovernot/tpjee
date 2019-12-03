@@ -16,20 +16,25 @@ public class Client extends GenericEntity{
   private String nom;
   private String nomContact;
   private String prenom;
+  private Boolean type;
   private String tel;
   private String email;
+  @ManyToOne
+  private Utilisateur utilisateur;
   @ManyToOne
   private Adresse adresse;
 
     public Client() {
     }
 
-    public Client(String nom, String nomContact, String prenom, String tel, String email, Adresse adresse) {
+    public Client(String nom, String nomContact, String prenom, Boolean type, String tel, String email, Utilisateur utilisateur, Adresse adresse) {
         this.nom = nom;
         this.nomContact = nomContact;
         this.prenom = prenom;
+        this.type = type;
         this.tel = tel;
         this.email = email;
+        this.utilisateur = utilisateur;
         this.adresse = adresse;
     }
 
@@ -79,6 +84,22 @@ public class Client extends GenericEntity{
 
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
+    }
+
+    public Boolean getType() {
+        return type;
+    }
+
+    public void setType(Boolean type) {
+        this.type = type;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(Utilisateur utilisateur) {
+        this.utilisateur = utilisateur;
     }
 
     @Override

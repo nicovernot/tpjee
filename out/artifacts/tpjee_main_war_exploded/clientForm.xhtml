@@ -11,17 +11,13 @@
 <ui:composition>
 <p:dialog widgetVar="dialogAjouterresource"
           id='dialogAjouterresource'
-          header="#{clientView.client.id == null ? 'Nouveau Client' : 'Modification de ' += clientView.client}"
+          header="#{clientView.client.id == null ? 'Nouveau Client' : 'Modification de ' += clientView.client.email}"
           modal="true"
           closeOnEscape="true">
     <h:form id="formAjouterresource">
         <h:panelGrid columns="2" cellpadding="5">
-            <p:outputLabel for="mail" value="Email:"/>
-            <p:inputText id="mail"
-                         size="50"
-                         value="#{clientView.client.email}"
-                         required="true"
-                         requiredMessage="Le nom est obligatoire"/>
+            <p:outputLabel for="type" value="Type:"/>
+            <p:selectBooleanCheckbox id="type" value="#{clientView.client.type}" itemLabel="Entreprise"/>
             <p:outputLabel for="nom" value="Nom:"/>
             <p:inputText id="nom"
                          size="30"
@@ -56,6 +52,7 @@
                          update="@form,formResources:messages,formResources:tableresources"/>
     </h:form>
 </p:dialog>
+
 </ui:composition>
 </body>
 </html>

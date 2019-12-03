@@ -1,9 +1,12 @@
 package montp.data.dao;
 
 import montp.data.model.Projet;
+import montp.data.model.Utilisateur;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -17,21 +20,37 @@ public class ProjetDAO extends GenericDAO<Projet> {
     private EntityManager em;
     @Inject
     private Event<Projet> ProjetEvent;
-
+    @Inject
+    private UtilisateurDAO utilisateurDAO;
+    private Utilisateur utilisateur;
     public Projet get(int id) {
         return em.find(Projet.class, id);
     }
 
     public ProjetDAO() { super(Projet.class);}
 
+    @PostConstruct
+    public void init(){
+        getUtilisateur();
+    }
+
+    public Utilisateur getUtilisateur() {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        utilisateur = utilisateurDAO.getByName(facesContext.getExternalContext().getRemoteUser());
+        System.out.print("tpr" + utilisateur.getNom());
+        return utilisateur;
+    }
+
     public List<Projet> getAll() {
-        return em.createQuery("SELECT e FROM Projet e")
+        return em.createQuery("SELECT e FROM Projet e where e.utilisateur=:user")
+            .setParameter("user",utilisateur)
             .getResultList();
     }
 
     public List<Projet> get(int satrt,int limit, String nom){
-        return  em.createQuery("SELECT j from Projet j WHERE j.nom=:nom ")
+        return  em.createQuery("SELECT j from Projet j WHERE j.nom=:nom and j.utilisateur=:user")
             .setParameter("nom",nom)
+            .setParameter("user",utilisateur)
             .getResultList();
     }
 
@@ -55,7 +74,8 @@ public class ProjetDAO extends GenericDAO<Projet> {
 
 
     public List<Projet> get(int start, int limit) {
-        return em.createQuery("SELECT j FROM Projet j ORDER BY j.nom")
+        return em.createQuery("SELECT j FROM Projet j where j.utilisateur=:user ORDER BY j.nom")
+            .setParameter("user",utilisateur)
             .setFirstResult(start)
             .setMaxResults(limit)
             .getResultList();
@@ -63,13 +83,14 @@ public class ProjetDAO extends GenericDAO<Projet> {
 
 
     public int getCount() {
-        return ((Long)em.createQuery("SELECT COUNT(e) FROM Projet e")
+        return ((Long)em.createQuery("SELECT COUNT(e) FROM Projet e where e.utilisateur=:user")
+            .setParameter("user",utilisateur)
             .getSingleResult()).intValue();
     }
     public int getCountByNom(String nom ){
-        System.out.print(nom);
-        return ((Long) em.createQuery("SELECT COUNT(j) from Projet  j WHERE j.nom=:nom")
+        return ((Long) em.createQuery("SELECT COUNT(j) from Projet  j WHERE j.nom=:nom and j.utilisateur=:user")
             .setParameter("nom",nom)
+            .setParameter("user",utilisateur)
             .getSingleResult()).intValue();
     }
 
