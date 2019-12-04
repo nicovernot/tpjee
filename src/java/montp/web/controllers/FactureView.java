@@ -1,9 +1,6 @@
 package montp.web.controllers;
 
-import montp.data.dao.EtatFactureDAO;
-import montp.data.dao.FactureDAO;
-import montp.data.dao.ProjetDAO;
-import montp.data.dao.TypePaiementDAO;
+import montp.data.dao.*;
 import montp.data.model.*;
 import montp.data.model.Facture;
 import montp.locale.Messages;
@@ -42,7 +39,10 @@ public class FactureView implements Serializable {
     private List<Projet> projetList;
     private List<TypePaiement> typePaiementList;
     private List<EtatFacture> etatFactureList;
-
+    @Inject
+    private LigneFacturationDAO ligneFacturationDAO;
+    private LignesFacturation lignesFacturation;
+    private List<LignesFacturation> lignesFacturationList;
     @PostConstruct
     public void init() {
 
@@ -50,19 +50,16 @@ public class FactureView implements Serializable {
         projetList = projetDAO.getAll();
         typePaiementList = typePaiementDAO.getAll();
         etatFactureList = etatFactureDAO.getAll();
+        lignesFacturationList = ligneFacturationDAO.getAll();
+        lignesFacturation = new LignesFacturation();
+    }
 
-    }
-    public Collection<Facture> getRestyp() {
-        return res.getAll();
-    }
 
     public Messages getMessages() {
         return messages;
     }
 
-    public int getCoutrestype(){
-        return res.getCount();
-    }
+
 
     public void delete(Facture facture) {
         try {
@@ -73,32 +70,74 @@ public class FactureView implements Serializable {
                 facture);
         }
     }
-    public void  create(){
 
-        facture = new Facture();
-        etatFacture =new EtatFacture();
-        typePaiement =new TypePaiement();
-        projet = new Projet();
+    public void deleteLigne(LignesFacturation lignesFacturation) {
+        try {
+            ligneFacturationDAO.delete(lignesFacturation);
+        } catch (TransactionalException txe) {
+            FacesTools.addMessage(FacesMessage.SEVERITY_ERROR,
+                messages.get("app.delete.error"),
+                lignesFacturation);
+        }
     }
 
+
+    public void  create(){
+        projet = new Projet();
+        typePaiement = new TypePaiement();
+        etatFacture = new EtatFacture();
+        facture = new Facture();
+
+    }
+
+    public String reinit() {
+        lignesFacturation = new LignesFacturation();
+        lignesFacturationList.add(lignesFacturation);
+
+        return null;
+    }
     public void save() {
         if (facture.getId() == null) {
+            System.out.print("id null");
+            facture.setEtatFacture(etatFacture);
+            facture.setProjet(projet);
+            facture.setTypePaiement(typePaiement);
             res.insert(facture);
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "facture créé");
         } else {
+            facture.setEtatFacture(etatFacture);
+            facture.setProjet(projet);
+            facture.setTypePaiement(typePaiement);
             res.update(facture);
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "Modifications enregistrées");
         }
     }
 
+    public void saveLigne() {
+        if (lignesFacturation.getId() == null) {
+            lignesFacturation.setFacture(facture);
+            ligneFacturationDAO.insert(lignesFacturation);
+            FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
+                "ligne créé");
+        } else {
+            ligneFacturationDAO.update(lignesFacturation);
+            FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
+                "Modifications enregistrées");
+        }
+    }
+
     public Facture getFacture(){
+
         return facture;
     }
 
-    public void setFacture(Facture Facture) {
+    public void setFacture(Facture facture) {
+        if(facture==null)
+            create();
         this.facture = facture;
+
     }
 
     public List<Facture> getFactures() {
@@ -106,14 +145,14 @@ public class FactureView implements Serializable {
     }
 
 
-    public void update(Facture facture) {
-        try {
 
-            res.update(facture);
+    public void updateLigne(Facture facture) {
+        try {
+            ligneFacturationDAO.update(lignesFacturation);
         } catch (TransactionalException txe) {
             FacesTools.addMessage(FacesMessage.SEVERITY_ERROR,
-                "Impossible de metre à jour la Facture %s car il fait partie il y a des resources de ce type",
-                facture);
+                "Impossible de metre à jour la ligne %s car il fait partie des resources de ce type",
+                lignesFacturation);
         }
     }
 
@@ -171,5 +210,29 @@ public class FactureView implements Serializable {
 
     public void setEtatFactureList(List<EtatFacture> etatFactureList) {
         this.etatFactureList = etatFactureList;
+    }
+
+    public LignesFacturation getLignesFacturation() {
+        return lignesFacturation;
+    }
+
+    public void setLignesFacturation(LignesFacturation lignesFacturation) {
+        this.lignesFacturation = lignesFacturation;
+    }
+
+    public List<LignesFacturation> getLignesFacturationList() {
+        return lignesFacturationList;
+    }
+
+    public void setLignesFacturationList(List<LignesFacturation> lignesFacturationList) {
+        this.lignesFacturationList = lignesFacturationList;
+    }
+
+    public List<Facture> getRst() {
+        return rst;
+    }
+
+    public void setRst(List<Facture> rst) {
+        this.rst = rst;
     }
 }

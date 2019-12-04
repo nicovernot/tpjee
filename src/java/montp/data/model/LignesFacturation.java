@@ -1,6 +1,7 @@
 package montp.data.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 /**
  * Class LignesFacturation
@@ -15,72 +16,50 @@ public class LignesFacturation extends GenericEntity {
   private String libelle;
   private Double prixUnitaire;
   private Integer quantite;
+  @ManyToOne
+  private  Facture facture;
 
-  //
-  // Constructors
-  //
-  public LignesFacturation () { };
+    public LignesFacturation() {
+    }
 
-  //
-  // Methods
-  //
+    public LignesFacturation(String libelle, Double prixUnitaire, Integer quantite, Facture facture) {
+        this.libelle = libelle;
+        this.prixUnitaire = prixUnitaire;
+        this.quantite = quantite;
+        this.facture = facture;
+    }
 
+    public String getLibelle() {
+        return libelle;
+    }
 
-  //
-  // Accessor methods
-  //
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
 
-  /**
-   * Set the value of libelle
-   * @param newVar the new value of libelle
-   */
-  private void setLibelle (String newVar) {
-    libelle = newVar;
-  }
+    public Double getPrixUnitaire() {
+        return prixUnitaire;
+    }
 
-  /**
-   * Get the value of libelle
-   * @return the value of libelle
-   */
-  private String getLibelle () {
-    return libelle;
-  }
+    public void setPrixUnitaire(Double prixUnitaire) {
+        this.prixUnitaire = prixUnitaire;
+    }
 
-  /**
-   * Set the value of prixUnitaire
-   * @param newVar the new value of prixUnitaire
-   */
-  private void setPrixUnitaire (Double newVar) {
-    prixUnitaire = newVar;
-  }
+    public Integer getQuantite() {
+        return quantite;
+    }
 
-  /**
-   * Get the value of prixUnitaire
-   * @return the value of prixUnitaire
-   */
-  private Double getPrixUnitaire () {
-    return prixUnitaire;
-  }
+    public void setQuantite(Integer quantite) {
+        this.quantite = quantite;
+    }
 
-  /**
-   * Set the value of quantite
-   * @param newVar the new value of quantite
-   */
-  private void setQuantite (Integer newVar) {
-    quantite = newVar;
-  }
+    public Facture getFacture() {
+        return facture;
+    }
 
-  /**
-   * Get the value of quantite
-   * @return the value of quantite
-   */
-  private Integer getQuantite () {
-    return quantite;
-  }
-
-  //
-  // Other methods
-  //
+    public void setFacture(Facture facture) {
+        this.facture = facture;
+    }
 
     @Override
     public String toString() {

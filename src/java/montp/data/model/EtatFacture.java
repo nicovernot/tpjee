@@ -8,9 +8,7 @@ import javax.persistence.Entity;
 @Entity
 public class EtatFacture extends GenericEntity{
 
-  //
-  // Fields
-  //
+
 
   private String etat;
 
@@ -31,8 +29,6 @@ public class EtatFacture extends GenericEntity{
 
     @Override
     public String toString() {
-        return "EtatFacture{" +
-            "etat='" + etat + '\'' +
-            '}';
+        return etat ;
     }
 }

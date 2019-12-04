@@ -3,6 +3,7 @@ package montp.data.dao;
 import montp.data.model.Facture;
 import montp.data.model.Utilisateur;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.event.Event;
 import javax.faces.context.FacesContext;
@@ -28,6 +29,11 @@ public class FactureDAO extends GenericDAO<Facture>{
     }
 
     public FactureDAO() { super(Facture.class);}
+
+    @PostConstruct
+    public void init(){
+        getUtilisateur();
+    }
 
     public Utilisateur getUtilisateur() {
         FacesContext facesContext = FacesContext.getCurrentInstance();

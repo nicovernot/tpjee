@@ -117,6 +117,7 @@ public class ProjetView implements Serializable {
     }
 
     public Projet getProjet(){
+
         return projet;
     }
 

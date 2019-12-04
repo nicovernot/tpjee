@@ -25,8 +25,6 @@ public class Facture extends GenericEntity {
   private EtatFacture etatFacture;
   @ManyToOne
   private TypePaiement typePaiement;
-  @OneToMany
-  private List<LignesFacturation> lignesFacturation;
 
   //
   // Constructors
@@ -40,7 +38,7 @@ public class Facture extends GenericEntity {
         this.notePage = notePage;
         this.etatFacture = etatFacture;
         this.typePaiement = typePaiement;
-        this.lignesFacturation = lignesFacturation;
+
     }
 
     public Projet getProjet() {
@@ -91,18 +89,9 @@ public class Facture extends GenericEntity {
         this.typePaiement = typePaiement;
     }
 
-    public List<LignesFacturation> getLignesFacturation() {
-        return lignesFacturation;
-    }
-
-    public void setLignesFacturation(List<LignesFacturation> lignesFacturation) {
-        this.lignesFacturation = lignesFacturation;
-    }
 
     @Override
     public String toString() {
-        return "Facture{" +
-            "etatFacture=" + etatFacture +
-            '}';
+        return  etatFacture.getEtat();
     }
 }

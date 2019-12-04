@@ -14,28 +14,44 @@
               header="#{factureView.facture.id == null ? 'Nouveau Projet' : 'Modification de ' += factureView.facture.projet.nom}"
               modal="true"
               closeOnEscape="true">
+        <p:accordionPanel>
+        <p:tab title="Edition facture">
         <h:form id="formAjouterAdresse">
-            <h:panelGrid columns="2" cellpadding="5">
+            <h:panelGrid columns="8" cellpadding="5">
+                <h:outputText for="daed" value="date edition:" />
+                <p:calendar id="daed" value="#{factureView.facture.dateEdition}"/>
 
+
+                <h:outputText for="daed1" value="date edition:" />
+                <p:calendar id="daed1" value="#{factureView.facture.datePaiement}"/>
+
+                <h:outputText for="txt" value="note de page:" />
+                <p:inputTextarea id="txt" rows="6" cols="33" value="#{factureView.facture.notePage}"/>
 
                 <p:outputLabel for="advanced" value="Projet:"/>
-                <p:selectOneListbox id="advanced" value="#{factureView.facture}"  var="t" filter="true" filterMatchMode="contains">
-                    <f:selectItems value="#{factureView.projetList}" var="client" itemLabel="#{factureView.projet.nom}" itemValue="#{projet}" />
+                <p:selectOneListbox id="advanced" value="#{factureView.projet}"  var="t" filter="true" filterMatchMode="contains">
+                    <f:selectItems value="#{factureView.projetList}" var="projet" itemLabel="#{factureView.projet.nom}" itemValue="#{projet}" />
                     <p:column>
                         <h:outputText value="#{t.nom}" />
                     </p:column>
                 </p:selectOneListbox>
 
-                <p:outputLabel for="statut" value="Statut:"/>
-                <p:selectOneListbox id="statut" value="#{factureView.facture}"  var="t" filter="true" filterMatchMode="contains">
-                    <f:selectItems value="#{factureView.typePaiementList}" var="statuProjet" itemLabel="#{factureView.typePaiement.typePaiement}" itemValue="#{typePaiement}" />
+                <p:outputLabel for="tp" value="Statut:"/>
+                <p:selectOneListbox id="tp" value="#{factureView.typePaiement}"  var="t" filter="true" filterMatchMode="contains">
+                    <f:selectItems value="#{factureView.typePaiementList}" var="typePaiement" itemLabel="#{factureView.typePaiement.typePaiement}" itemValue="#{typePaiement}" />
                     <p:column>
                         <h:outputText value="#{t.typePaiement}" />
                     </p:column>
                 </p:selectOneListbox>
 
+                 <p:outputLabel for="statut" value="Statut:"/>
+                <p:selectOneListbox id="statut" value="#{factureView.etatFacture}"  var="t" filter="true" filterMatchMode="contains">
+                    <f:selectItems value="#{factureView.etatFactureList}" var="etatFacture" itemLabel="#{factureView.etatFacture.etat}" itemValue="#{etatFacture}" />
+                    <p:column>
+                        <h:outputText value="#{t.etat}" />
+                    </p:column>
+                </p:selectOneListbox>
 
-                <p:spacer/>
 
             </h:panelGrid>
             <p:commandButton value="#{factureView.facture.id == null ? 'Ajouter' : 'Enregistrer'}"
@@ -43,6 +59,60 @@
                              update="@form,formResources:messages,formResources:tableresources"
                              oncomplete="if (!args.validationFailed) PF('dialogAjouterAdresse').hide()"/>
         </h:form>
+        </p:tab>
+        <p:tab title="Ajout des Lignes">
+        <h:form id="form">
+            <p:growl id="msgs" />
+
+            <p:panel header="Créér une nouvelle ligne" style="margin-bottom:20px">
+                <h:panelGrid columns="8" cellpadding="5">
+                    <h:outputLabel value="libellé : *" for="libelle"></h:outputLabel>
+                    <p:inputText id="libelle" value="#{factureView.lignesFacturation.libelle}" required="true"/>
+
+                    <h:outputLabel value="Prix unitaire : *" for="pu"></h:outputLabel>
+                    <p:inputText id="pu" value="#{factureView.lignesFacturation.prixUnitaire}" required="true"/>
+
+                    <h:outputLabel value="Quantité : *" for="qu"></h:outputLabel>
+                    <p:inputText id="qu" value="#{factureView.lignesFacturation.quantite}" required="true"/>
+
+                    <p:commandButton id="btn_reset" value="Reset" type="reset"/>
+                    <p:commandButton id="btn_add" value="Add" update="lignes msgs @parent" action="#{factureView.reinit}" >
+                        <p:collector value="#{factureView.lignesFacturation}" addTo="#{factureView.lignesFacturationList}" unique="true"/>
+                    </p:commandButton>
+                </h:panelGrid>
+            </p:panel>
+
+            <p:outputPanel id="lignes">
+                <p:dataTable value="#{factureView.lignesFacturationList}" var="lignesFacturation" id="lignesTable">
+
+                    <p:column headerText="libellé">
+                        <h:outputText value="#{lignesFacturation.libelle}" />
+                    </p:column>
+
+                    <p:column headerText="Prix unitaire">
+                        <f:facet name="header">
+                            <h:outputText value="Prix unitaire" />
+                        </f:facet>
+                        <h:outputText value="#{lignesFacturation.prixUnitaire}" />
+                    </p:column>
+
+
+                    <p:column headerText="Quantité">
+                        <f:facet name="header">
+                            <h:outputText value="Quantité" />
+                        </f:facet>
+                        <h:outputText value="#{lignesFacturation.quantite}" />
+                    </p:column>
+
+                    <p:column headerText="Action">
+                       action
+                    </p:column>
+
+                </p:dataTable>
+            </p:outputPanel>
+        </h:form>
+        </p:tab>
+        </p:accordionPanel>
     </p:dialog>
 </ui:composition>
 </body>
