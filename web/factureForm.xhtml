@@ -84,7 +84,7 @@
         </h:form>
             <h:form id="formtable" >
             <p:outputPanel id="lignes">
-                <p:dataTable value="#{factureView.lignesFacturationList}" var="lignesFacturation" id="lignesTable" widgetVar="lignesTable">
+                <p:dataTable value="#{factureView.lignesFacturationList}" var="lignesFacturation" id="lignesTable" widgetVar="lignesTable" scrollable="true" scrollHeight="150">
 
                     <p:column headerText="libellé">
                         <h:outputText value="#{lignesFacturation.libelle}" />
@@ -105,16 +105,19 @@
 
                     <p:column headerText="Action">
                         <p:commandButton value="Suprimer"
-                                         update="lignesTable"
+                                         update="lignesTable,j_idt31:formtable:total"
                                          action="#{factureView.deleteLigne(lignesFacturation)}"/>
                         <p:commandButton value="Modifier"
+                                         update="j_idt31:formLignes"
                                          action="#{factureView.setLignesFacturation(lignesFacturation)}"/>
                     </p:column>
 
                 </p:dataTable>
 
+                <h:outputText id="total"  value="#{factureView.total}"  />
             </p:outputPanel>
         </h:form>
+
         </p:tab>
         </p:accordionPanel>
     </p:dialog>

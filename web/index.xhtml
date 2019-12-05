@@ -5,20 +5,41 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="./layout.xhtml">
     <ui:define name="content">
+        <h:form>
+        <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
 
-           <h1>Mon TP</h1>
-        <p:panel id="basic" header="Basic" footer="Movie Details" style="margin-bottom:20px">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather1.jpg" />
-                <h:outputText
-                    value="The story begins as Don Vito Corleone, the head of a New York Mafia family, oversees his daughter's wedding.
-                His beloved son Michael has just come home from the war, but does not intend to become part of his father's business.
-                Through Michael's life the nature of the family business becomes clear. The business of the family is just like the head of the family, kind and benevolent to those who give respect,
-                but given to ruthless violence whenever anything stands against the good of the family." />
+        <p:panel id="basic" header="Resumé annuel" footer="Donnéés annuelles" style="margin-bottom:20px">
+            <h:panelGrid columns="3" cellpadding="10">
+
+                <p:chart type="line" model="#{index.lineModel1}" style="height:300px;"/>
+
+                <p:panel id="cbasic" header="2019" footer="Movie Details" style="margin-bottom:20px">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        Chiffre d'affaires attendu : <h:outputText value="#{index.utilisateur.ca}"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" cellpadding="10">
+                        Taux de charges: <h:outputText value="#{index.utilisateur.tauxCharges}"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" cellpadding="10">
+                        montant charges previsionnel : <h:outputText value="#{index.chargespayer}"/>
+                    </h:panelGrid>
+                </p:panel>
+                <p:panel id="cbasic1" header="2019" footer="Movie Details" style="margin-bottom:20px">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        Chiffre d'affaires attendu : <h:outputText value="#{index.utilisateur.ca}"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" cellpadding="10">
+                        Taux de charges: <h:outputText value="#{index.utilisateur.tauxCharges}"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="2" cellpadding="10">
+                        montant charges previsionnel : <h:outputText value="#{index.chargespayer}"/>
+                    </h:panelGrid>
+                </p:panel>
+
             </h:panelGrid>
-        </p:panel>
-        <p:commandButton type="button" value="Logout" actionListener="#{index.logout}" icon="pi pi-home" />
 
+        </p:panel>
+        </h:form>
     </ui:define>
 
 </ui:composition>

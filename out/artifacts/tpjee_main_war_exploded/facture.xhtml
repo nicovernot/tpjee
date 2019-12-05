@@ -6,6 +6,19 @@
                 template="./layout.xhtml">
 
     <ui:define name="content">
+        <style type="text/css">
+            .ui-datatable {
+                margin-bottom:20px;
+            }
+
+            .ui-datatable-frozenlayout-left {
+                width:20%;
+            }
+
+            .ui-datatable-frozenlayout-right {
+                width:80%;
+            }
+        </style>
         <p:panel>
             <h:form id="formResources">
                 <p:growl id="messages" autoUpdate="true"/>

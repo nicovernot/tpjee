@@ -43,6 +43,7 @@ public class FactureView implements Serializable {
     private LigneFacturationDAO ligneFacturationDAO;
     private LignesFacturation lignesFacturation;
     private List<LignesFacturation> lignesFacturationList;
+    private Double total;
     @PostConstruct
     public void init() {
 
@@ -51,7 +52,8 @@ public class FactureView implements Serializable {
         typePaiementList = typePaiementDAO.getAll();
         etatFactureList = etatFactureDAO.getAll();
         lignesFacturation = new LignesFacturation();
-    }
+         total = 0.00;
+        }
 
 
     public Messages getMessages() {
@@ -73,15 +75,23 @@ public class FactureView implements Serializable {
     public void deleteLigne(LignesFacturation lignesFacturation) {
         try {
             ligneFacturationDAO.delete(lignesFacturation);
+            setTotal(total);
             lignesFacturationList = ligneFacturationDAO.getAllByFacture(facture);
+
         } catch (TransactionalException txe) {
             FacesTools.addMessage(FacesMessage.SEVERITY_ERROR,
                 messages.get("app.delete.error"),
                 lignesFacturation);
         }
     }
-public double getResult(){
-        return ligneFacturationDAO.total(facture);
+public void getResult(){
+        setTotal(total);
+        Double total1 ;
+        total1=0.00;
+    for (LignesFacturation facturation : lignesFacturationList) {
+        total1= facturation.getQuantite()*facturation.getPrixUnitaire()+total1;
+         }
+    System.out.print("total"+total1);
 }
 
     public void  create(){
@@ -127,10 +137,13 @@ public double getResult(){
             ligneFacturationDAO.insert(lignesFacturation);
             lignesFacturationList = ligneFacturationDAO.getAllByFacture(facture);
             lignesFacturation = null;
+            setTotal(total);
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "ligne créé");
         } else {
             ligneFacturationDAO.update(lignesFacturation);
+            lignesFacturation=null;
+            setTotal(total);
             lignesFacturationList = ligneFacturationDAO.getAllByFacture(facture);
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "Modifications enregistrées");
@@ -144,6 +157,7 @@ public double getResult(){
 
     public void setFacture(Facture facture) {
         lignesFacturationList = ligneFacturationDAO.getAllByFacture(facture);
+        setTotal(total);
         this.facture = facture;
 
     }
@@ -154,15 +168,6 @@ public double getResult(){
 
 
 
-    public void updateLigne(Facture facture) {
-        try {
-            ligneFacturationDAO.update(lignesFacturation);
-        } catch (TransactionalException txe) {
-            FacesTools.addMessage(FacesMessage.SEVERITY_ERROR,
-                "Impossible de metre à jour la ligne %s car il fait partie des resources de ce type",
-                lignesFacturation);
-        }
-    }
 
     public FacturePaginator getFacturePaginator() {
         return facturePaginator;
@@ -242,5 +247,18 @@ public double getResult(){
 
     public void setRst(List<Facture> rst) {
         this.rst = rst;
+    }
+
+    public Double getTotal() {
+
+        return total;
+    }
+
+    public void setTotal(Double total) {
+         total=0.00;
+        for (LignesFacturation facturation : lignesFacturationList) {
+            total= facturation.getQuantite()*facturation.getPrixUnitaire()+total;
+        }
+        this.total = total;
     }
 }

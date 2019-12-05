@@ -72,6 +72,8 @@ public class FactureDAO extends GenericDAO<Facture>{
 
 
 
+
+
     public int getCount() {
         return ((Long)em.createQuery("SELECT COUNT(e) FROM Facture e where e.projet.utilisateur=:user")
             .setParameter("user",utilisateur)
