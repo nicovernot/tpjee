@@ -57,6 +57,7 @@
                         <p:commandButton icon="fa fa-trash"
                                          title="Supprimer"
                                          actionListener="#{factureView.delete(j)}"
+                                         rendered="#{factureView.ispaye(j)}"
                                          update="tableresources"
                                          process="@this">
                             <p:confirm header="Supprimer un Projet"
@@ -66,9 +67,10 @@
                         <p:commandButton icon="fa fa-edit"
                                          title="Modifier"
                                          process="@this"
+
                                          actionListener="#{factureView.setFacture(j)}"
                                          oncomplete="PF('dialogAjouterAdresse').show()"
-                                         update="dialogAjouterAdresse,"/>
+                                         update="dialogAjouterAdresse"/>
 
                     </p:column>
                 </p:dataTable>

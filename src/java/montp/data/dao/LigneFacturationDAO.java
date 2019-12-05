@@ -49,7 +49,7 @@ public class LigneFacturationDAO extends GenericDAO<LignesFacturation> {
             .getResultList();
     }
     public List<LignesFacturation> getPaye(){
-        return em.createQuery("select e from LignesFacturation e where e.facture.etatFacture='payée' and e.facture.projet.utilisateur=:user ")
+        return em.createQuery("select e from LignesFacturation e where e.facture.etatFacture.id=23301 and e.facture.projet.utilisateur=:user ")
             .setParameter("user",utilisateur)
             .getResultList();
     }

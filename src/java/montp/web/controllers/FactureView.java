@@ -116,8 +116,6 @@ public void getResult(){
 
     public void save() {
         if (facture.getId() == null) {
-            System.out.print("id null");
-
             facture.setEtatFacture(etatFacture);
             facture.setProjet(projet);
             facture.setTypePaiement(typePaiement);
@@ -125,10 +123,21 @@ public void getResult(){
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "facture créé");
         } else {
+            facture.setEtatFacture(etatFacture);
+
+            facture.setTypePaiement(typePaiement);
                   res.update(facture);
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "Modifications enregistrées");
         }
+    }
+
+    public Boolean ispaye(Facture facture){
+        return res.esPaye(facture);
+    }
+
+    public Boolean aLignes(Facture facture){
+        return res.alignes(facture);
     }
 
     public void saveLigne() {
@@ -158,6 +167,9 @@ public void getResult(){
     public void setFacture(Facture facture) {
         lignesFacturationList = ligneFacturationDAO.getAllByFacture(facture);
         setTotal(total);
+        projet=facture.getProjet();
+        etatFacture = facture.getEtatFacture();
+        typePaiement=facture.getTypePaiement();
         this.facture = facture;
 
     }
@@ -165,8 +177,6 @@ public void getResult(){
     public List<Facture> getFactures() {
         return res.getAll();
     }
-
-
 
 
     public FacturePaginator getFacturePaginator() {
@@ -189,7 +199,7 @@ public void getResult(){
         return etatFacture;
     }
 
-    public void setEtatFacture(EtatFacture etatFacture) {
+    public void setEtatFacture(EtatFacture etatFacture)  {
         this.etatFacture = etatFacture;
     }
 

@@ -70,8 +70,18 @@ public class FactureDAO extends GenericDAO<Facture>{
             .getResultList();
     }
 
+    public boolean esPaye(Facture facture){
+return ((Long) em.createQuery("select count (e) from Facture e where e.etatFacture.etat='payée' and e=:fact")
+.setParameter("fact",facture)
+.getSingleResult()>0);
+ }
 
 
+    public boolean alignes(Facture facture){
+        return ((Long) em.createQuery("select count (e) from LignesFacturation e where e.facture=:fact")
+            .setParameter("fact",facture)
+            .getSingleResult()>0);
+    }
 
 
     public int getCount() {
