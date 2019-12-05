@@ -46,7 +46,10 @@
             </h:panelGrid>
             <p:commandButton value="#{clientView.adresse.id == null ? 'Ajouter' : 'Enregistrer'}"
                              action="#{clientView.saveAdresse}"
-                             oncomplete="if (!args.validationFailed) PF('dialogAjouterAdresse').hide()"/>
+                             update="formResources:tableresources"
+                             oncomplete="if (!args.validationFailed) PF('dialogAjouterAdresse').hide()">
+                <p:ajax update="formResources:tableresources" />
+            </p:commandButton>
         </h:form>
     </p:dialog>
 </ui:composition>

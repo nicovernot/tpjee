@@ -13,6 +13,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -33,6 +34,14 @@ public class IndexView implements Serializable {
     utilisateur = utilisateurDAO.getByName(facesContext.getExternalContext().getRemoteUser());
     System.out.print("rr" + utilisateur.getNom());
 }
-
+    public void logout() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().invalidateSession();
+        try {
+            context.getExternalContext().redirect("Login.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

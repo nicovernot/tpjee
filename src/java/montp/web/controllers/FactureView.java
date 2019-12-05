@@ -50,7 +50,6 @@ public class FactureView implements Serializable {
         projetList = projetDAO.getAll();
         typePaiementList = typePaiementDAO.getAll();
         etatFactureList = etatFactureDAO.getAll();
-        lignesFacturationList = ligneFacturationDAO.getAll();
         lignesFacturation = new LignesFacturation();
     }
 
@@ -74,13 +73,16 @@ public class FactureView implements Serializable {
     public void deleteLigne(LignesFacturation lignesFacturation) {
         try {
             ligneFacturationDAO.delete(lignesFacturation);
+            lignesFacturationList = ligneFacturationDAO.getAllByFacture(facture);
         } catch (TransactionalException txe) {
             FacesTools.addMessage(FacesMessage.SEVERITY_ERROR,
                 messages.get("app.delete.error"),
                 lignesFacturation);
         }
     }
-
+public double getResult(){
+        return ligneFacturationDAO.total(facture);
+}
 
     public void  create(){
         projet = new Projet();
@@ -96,9 +98,16 @@ public class FactureView implements Serializable {
 
         return null;
     }
+
+    public void removeLine(LignesFacturation lignesFacturation){
+    lignesFacturationList.remove(lignesFacturation);
+    System.out.print("remove"+lignesFacturationList.size());
+    }
+
     public void save() {
         if (facture.getId() == null) {
             System.out.print("id null");
+
             facture.setEtatFacture(etatFacture);
             facture.setProjet(projet);
             facture.setTypePaiement(typePaiement);
@@ -106,10 +115,7 @@ public class FactureView implements Serializable {
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "facture créé");
         } else {
-            facture.setEtatFacture(etatFacture);
-            facture.setProjet(projet);
-            facture.setTypePaiement(typePaiement);
-            res.update(facture);
+                  res.update(facture);
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "Modifications enregistrées");
         }
@@ -119,10 +125,13 @@ public class FactureView implements Serializable {
         if (lignesFacturation.getId() == null) {
             lignesFacturation.setFacture(facture);
             ligneFacturationDAO.insert(lignesFacturation);
+            lignesFacturationList = ligneFacturationDAO.getAllByFacture(facture);
+            lignesFacturation = null;
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "ligne créé");
         } else {
             ligneFacturationDAO.update(lignesFacturation);
+            lignesFacturationList = ligneFacturationDAO.getAllByFacture(facture);
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "Modifications enregistrées");
         }
@@ -134,8 +143,7 @@ public class FactureView implements Serializable {
     }
 
     public void setFacture(Facture facture) {
-        if(facture==null)
-            create();
+        lignesFacturationList = ligneFacturationDAO.getAllByFacture(facture);
         this.facture = facture;
 
     }

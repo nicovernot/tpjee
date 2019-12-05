@@ -31,12 +31,7 @@
 
                              value="#{clientView.clientPaginator}">
                     <p:column filterBy="#{j.nom}" headerText="nom">
-                        <f:facet name="filter">
-                            <p:selectOneMenu onchange="PF('tableresources').filter()" styleClass="custom-filter">
 
-                                <f:selectItems value="#{clientView.clients}" var="r" itemValue="#{r.nom}"/>
-                            </p:selectOneMenu>
-                        </f:facet>
                         #{j.nom}
                     </p:column>
                     <p:column headerText="Prenom">
@@ -75,7 +70,9 @@
                                          actionListener="#{clientView.setClient(j)}"
                                          value="Ajouter Adresse"
                                          oncomplete="PF('dialogAjouterAdresse').show()"
-                                         update="dialogAjouterresource"/>
+                                         update="dialogAjouterresource">
+                            <p:ajax update="dialogAjouterAdresse" resetValues="true" />
+                        </p:commandButton>
                         <p:commandButton icon="fa fa-building"
                                          value="Editer Adresse"
                                          styleClass="GreenButton"

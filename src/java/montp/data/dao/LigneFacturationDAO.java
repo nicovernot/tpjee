@@ -1,5 +1,6 @@
 package montp.data.dao;
 
+import montp.data.model.Facture;
 import montp.data.model.LignesFacturation;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -27,10 +28,21 @@ public class LigneFacturationDAO extends GenericDAO<LignesFacturation> {
         return em.createQuery("SELECT e FROM LignesFacturation e")
             .getResultList();
     }
+    public List<LignesFacturation> getAllByFacture(Facture facture) {
+        return em.createQuery("SELECT e FROM LignesFacturation e where e.facture=:fact")
+            .setParameter("fact",facture)
+            .getResultList();
+    }
 
     public int getCount() {
-        return ((Long)em.createQuery("SELECT COUNT(e) FROM LignesFacturation e")
+        return ((Long)em.createQuery("SELECT -- COUNT(e) FROM LignesFacturation e")
             .getSingleResult()).intValue();
+    }
+
+    public double total(Facture facture){
+        return (double) em.createQuery("select (e.quantite*e.prixUnitaire)  as result from LignesFacturation e where e.facture=:fact")
+                     .setParameter("fact",facture)
+            .getSingleResult();
     }
 
     @Transactional

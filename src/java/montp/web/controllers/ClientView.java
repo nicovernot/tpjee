@@ -1,6 +1,6 @@
 package montp.web.controllers;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import montp.data.dao.AdresseDAO;
 import montp.data.dao.ClientDAO;
 import montp.data.dao.UtilisateurDAO;
@@ -55,10 +55,6 @@ public class ClientView implements Serializable {
     }
 
 
-    public int getCoutrestype(){
-        return res.getCount();
-    }
-
     public void delete(Client client) {
         try {
             res.delete(client);
@@ -72,6 +68,7 @@ public class ClientView implements Serializable {
     public void  create(){
         client = new Client();
     }
+
 
     public void save() {
         if (client.getId() == null) {
@@ -88,10 +85,10 @@ public class ClientView implements Serializable {
 
     public void saveAdresse() {
         if (adresse.getId() == null) {
-
             adresseDAO.insert(adresse);
             client.setAdresse(adresse);
             res.update(client);
+
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "Adresse créé");
         } else {
@@ -105,10 +102,12 @@ public class ClientView implements Serializable {
     }
 
     public Client getClient(){
+
         return client;
     }
 
     public void setClient(Client client) {
+
         this.client = client;
     }
 

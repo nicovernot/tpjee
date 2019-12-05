@@ -61,7 +61,7 @@
         </h:form>
         </p:tab>
         <p:tab title="Ajout des Lignes">
-        <h:form id="form">
+        <h:form id="formLignes">
             <p:growl id="msgs" />
 
             <p:panel header="Créér une nouvelle ligne" style="margin-bottom:20px">
@@ -75,15 +75,16 @@
                     <h:outputLabel value="Quantité : *" for="qu"></h:outputLabel>
                     <p:inputText id="qu" value="#{factureView.lignesFacturation.quantite}" required="true"/>
 
-                    <p:commandButton id="btn_reset" value="Reset" type="reset"/>
-                    <p:commandButton id="btn_add" value="Add" update="lignes msgs @parent" action="#{factureView.reinit}" >
-                        <p:collector value="#{factureView.lignesFacturation}" addTo="#{factureView.lignesFacturationList}" unique="true"/>
-                    </p:commandButton>
+
+                    <p:commandButton value="Enregistrer"
+                                     action="#{factureView.saveLigne}"
+                                     update="@form,@widgetVar(lignesTable),msgs "/>
                 </h:panelGrid>
             </p:panel>
-
+        </h:form>
+            <h:form id="formtable" >
             <p:outputPanel id="lignes">
-                <p:dataTable value="#{factureView.lignesFacturationList}" var="lignesFacturation" id="lignesTable">
+                <p:dataTable value="#{factureView.lignesFacturationList}" var="lignesFacturation" id="lignesTable" widgetVar="lignesTable">
 
                     <p:column headerText="libellé">
                         <h:outputText value="#{lignesFacturation.libelle}" />
@@ -95,8 +96,6 @@
                         </f:facet>
                         <h:outputText value="#{lignesFacturation.prixUnitaire}" />
                     </p:column>
-
-
                     <p:column headerText="Quantité">
                         <f:facet name="header">
                             <h:outputText value="Quantité" />
@@ -105,10 +104,15 @@
                     </p:column>
 
                     <p:column headerText="Action">
-                       action
+                        <p:commandButton value="Suprimer"
+                                         update="lignesTable"
+                                         action="#{factureView.deleteLigne(lignesFacturation)}"/>
+                        <p:commandButton value="Modifier"
+                                         action="#{factureView.setLignesFacturation(lignesFacturation)}"/>
                     </p:column>
 
                 </p:dataTable>
+
             </p:outputPanel>
         </h:form>
         </p:tab>
