@@ -63,14 +63,14 @@
                                          title="Modifier"
                                          actionListener="#{clientView.setClient(j)}"
                                          oncomplete="PF('dialogAjouterresource').show()"
-                                         update="dialogAjouterresource"/>
+                                         update="dialogAjouterresource,dialogAjouterAdresse"/>
                         <p:commandButton icon="fa fa-building"
                                          title="Ajouter adresse"
                                          rendered="#{clientView.isEmptyAdresse(j)}"
                                          actionListener="#{clientView.setClient(j)}"
                                          value="Ajouter Adresse"
                                          oncomplete="PF('dialogAjouterAdresse').show()"
-                                         update="dialogAjouterresource">
+                                         update="dialogAjouterresource,dialogAjouterAdresse">
                             <p:ajax update="dialogAjouterAdresse" resetValues="true" />
                         </p:commandButton>
                         <p:commandButton icon="fa fa-building"

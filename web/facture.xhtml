@@ -57,7 +57,7 @@
                         <p:commandButton icon="fa fa-trash"
                                          title="Supprimer"
                                          actionListener="#{factureView.delete(j)}"
-                                         rendered="#{factureView.ispaye(j)}"
+                                         rendered="#{!factureView.ispaye(j)}"
                                          update="tableresources"
                                          process="@this">
                             <p:confirm header="Supprimer un Projet"

@@ -14,6 +14,7 @@ import javax.inject.Named;
 import javax.transaction.TransactionalException;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 @ViewScoped
@@ -44,6 +45,7 @@ public class FactureView implements Serializable {
     private LignesFacturation lignesFacturation;
     private List<LignesFacturation> lignesFacturationList;
     private Double total;
+
     @PostConstruct
     public void init() {
 
@@ -105,7 +107,6 @@ public void getResult(){
     public String reinit() {
         lignesFacturation = new LignesFacturation();
         lignesFacturationList.add(lignesFacturation);
-
         return null;
     }
 
@@ -151,11 +152,12 @@ public void getResult(){
                 "ligne créé");
         } else {
             ligneFacturationDAO.update(lignesFacturation);
-            lignesFacturation=null;
+
             setTotal(total);
             lignesFacturationList = ligneFacturationDAO.getAllByFacture(facture);
             FacesTools.addMessage(FacesMessage.SEVERITY_INFO,
                 "Modifications enregistrées");
+            lignesFacturation=null;
         }
     }
 

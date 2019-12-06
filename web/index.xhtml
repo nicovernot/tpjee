@@ -13,9 +13,9 @@
 
                 <p:chart type="line" model="#{index.lineModel1}" style="height:300px;"/>
 
-                <p:panel id="cbasic" header="2019" footer="Movie Details" style="margin-bottom:20px">
+                <p:panel id="cbasic" header=" previsionnel 2019" footer=" previsionnel 2019" style="margin-bottom:20px">
                     <h:panelGrid columns="2" cellpadding="10">
-                        Chiffre d'affaires attendu : <h:outputText value="#{index.utilisateur.ca}"/>
+                        chffre d'affaire previsionnel : <h:outputText value="#{index.utilisateur.ca}"/>
                     </h:panelGrid>
                     <h:panelGrid columns="2" cellpadding="10">
                         Taux de charges: <h:outputText value="#{index.utilisateur.tauxCharges}"/>
@@ -24,16 +24,17 @@
                         montant charges previsionnel : <h:outputText value="#{index.chargespayer}"/>
                     </h:panelGrid>
                 </p:panel>
-                <p:panel id="cbasic1" header="2019" footer="Movie Details" style="margin-bottom:20px">
+                <p:panel id="cbasic1" header=" CA et charges 2019" footer="ca et charges" style="margin-bottom:20px">
+                    <h:panelGrid columns="2" cellpadding="10">
+                        Chiffre d'affaires réglé : <h:outputText value="#{index.caan}"/>
+                    </h:panelGrid>
                     <h:panelGrid columns="2" cellpadding="10">
                         Chiffre d'affaires attendu : <h:outputText value="#{index.utilisateur.ca}"/>
                     </h:panelGrid>
                     <h:panelGrid columns="2" cellpadding="10">
-                        Taux de charges: <h:outputText value="#{index.utilisateur.tauxCharges}"/>
+                        Charges à payer  à ce jour: <h:outputText value="#{index.chargesreelles}"/>
                     </h:panelGrid>
-                    <h:panelGrid columns="2" cellpadding="10">
-                        montant charges previsionnel : <h:outputText value="#{index.caan}"/>
-                    </h:panelGrid>
+
                 </p:panel>
 
             </h:panelGrid>

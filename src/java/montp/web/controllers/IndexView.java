@@ -21,8 +21,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @ViewScoped
 @Named("index")
@@ -33,6 +32,7 @@ public class IndexView implements Serializable {
     private Utilisateur utilisateur;
     private LineChartModel lineModel1;
     private  Double chargespayer;
+    private  Double chargesreelles;
     @Inject
     private UtilisateurDAO utilisateurDAO;
     @Inject
@@ -40,26 +40,31 @@ public class IndexView implements Serializable {
     private Double caan;
     private LignesFacturation lignesFacturation;
     private List<LignesFacturation> lignesFacturationList;
+    private HashMap<Integer, Double> caMois;
 
 @PostConstruct
     public void init(){
+    caMois = new HashMap<Integer, Double>();
     userSession.init();
-    createLineModels();
+
     FacesContext facesContext = FacesContext.getCurrentInstance();
     utilisateur = utilisateurDAO.getByName(facesContext.getExternalContext().getRemoteUser());
     chargespayer = (utilisateur.getCa()*utilisateur.getTauxCharges())/100;
     System.out.print("indexrr" + utilisateur.getNom());
     lignesFacturationList = ligneFacturationDAO.getPaye();
-
+    createLineModels();
 }
 
    public void cafait(){
     caan=0.00;
        for (LignesFacturation facturation : lignesFacturationList) {
            caan = (facturation.getPrixUnitaire()*facturation.getQuantite())+caan;
-           System.out.print("ttt"+caan);
+           int mois = facturation.getFacture().getDatePaiement().getMonth();
+           System.out.print("ttt"+mois);
+           caMois.put(mois,facturation.getPrixUnitaire()*facturation.getQuantite());
        }
-
+       System.out.print(caMois.toString()+caMois.size());
+       chargesreelles = (caan*utilisateur.getTauxCharges())/100;
    }
 
     private void createLineModels() {
@@ -68,31 +73,41 @@ public class IndexView implements Serializable {
         lineModel1.setLegendPosition("e");
         Axis yAxis = lineModel1.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(12);
+        yAxis.setMax(10000);
         yAxis.setMin(0);
-        yAxis.setMax(12);
+        yAxis.setMax(10000);
     }
     private LineChartModel initLinearModel() {
         LineChartModel model = new LineChartModel();
+        LineChartSeries series3 = new LineChartSeries();
+        series3.setLabel("Ca réalisé");
+        for (LignesFacturation facturation : lignesFacturationList) {
+            int mois = facturation.getFacture().getDatePaiement().getMonth();
 
+            caMois.put(mois,facturation.getPrixUnitaire()*facturation.getQuantite());
+        }
+        for (int g:caMois.keySet()){
+            series3.set(g,caMois.get(g).intValue());
+
+        }
+        System.out.print("size "+caMois.size()+utilisateur.getNom());;
         LineChartSeries series1 = new LineChartSeries();
-        series1.setLabel("Series 1");
+        series1.setLabel("Ca attendu");
+        int caprev = utilisateur.getCa().intValue()/12;
+        for (int d=1;d<12;d++){
+            System.out.print("size "+d+caprev);;
+            series1.set(d, caprev);
+        }
 
-        series1.set(1, 2);
-        series1.set(2, 1);
-        series1.set(3, 3);
-        series1.set(4, 6);
-        series1.set(10, 8);
 
         LineChartSeries series2 = new LineChartSeries();
-        series2.setLabel("Series 2");
-
-        series2.set(1, 6);
-        series2.set(2, 3);
-        series2.set(3, 2);
-        series2.set(4, 7);
-        series2.set(10, 9);
-
+        series2.setLabel("charges attendues");
+        int chprev = (int) (((utilisateur.getCa().intValue()*utilisateur.getTauxCharges())/100)/12);
+        for (int d=1;d<12;d++){
+            System.out.print("size "+d+chprev);;
+            series2.set(d, chprev);
+        }
+        model.addSeries(series3);
         model.addSeries(series1);
         model.addSeries(series2);
 
@@ -147,5 +162,13 @@ public class IndexView implements Serializable {
 
     public void setLignesFacturationList(List<LignesFacturation> lignesFacturationList) {
         this.lignesFacturationList = lignesFacturationList;
+    }
+
+    public Double getChargesreelles() {
+        return chargesreelles;
+    }
+
+    public void setChargesreelles(Double chargesreelles) {
+        this.chargesreelles = chargesreelles;
     }
 }
